@@ -3,9 +3,6 @@
  * To run this script, copy and paste `node scraper.js` in the terminal
  */
 
-const cheerio = require('cheerio'); // For light weight scraping
-const puppeteer = require('puppeteer'); // For more advanced scraping
-
 const url = 'https://www.proshop.dk/Mus/Logitech-G903-LIGHTSPEED-HERO-Wireless-Gaming-Mus-Optisk-11-knapper-Sort-med-RGB-lys/2778872';
 const productSelector = 'h1[data-type="product"]';
 const priceSelector = 'span.site-currency-wrapper > span.site-currency-attention';
@@ -13,7 +10,10 @@ scrape(url, [productSelector, priceSelector])
   .then(result => console.log('Result ', result));
 
 
-async function scrape(url, selectors) {
+async function scrape(url, selectors, verbose = false) {
+  const cheerio = require('cheerio'); // For light weight scraping
+  const puppeteer = require('puppeteer'); // For more advanced scraping
+
   const result = [];
   const browser = await puppeteer.launch();
   try {
@@ -26,7 +26,9 @@ async function scrape(url, selectors) {
         html: document.documentElement.innerHTML,
       };
     });
-    // console.log('Page data ', pageData);
+    if (verbose) {
+      console.log('Page data ', pageData);
+    }
     
     for (const selector of selectors) {
       try {
@@ -41,8 +43,10 @@ async function scrape(url, selectors) {
       var text = $(selector).text();
       result.push(text);
     }
-    
-    console.log('Scraped from URL: ' + url + '\n', result);
+
+    if (verbose) {
+      console.log('Scraped from URL: ' + url + '\n', result);
+    }
     return result;
   } finally {
     browser.close();
