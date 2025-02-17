@@ -16,33 +16,35 @@ scrape(url, [productSelector, priceSelector])
 async function scrape(url, selectors) {
   const result = [];
   const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+  try {
+    const page = await browser.newPage();
 
-  await page.goto(url);
-
-  const pageData = await page.evaluate(() => {
-    return {
-      html: document.documentElement.innerHTML,
-    };
-  });
-  // console.log('Page data ', pageData);
+    await page.goto(url);
   
-  for (const selector of selectors) {
-    try {
-      await page.waitForSelector(selector, {timeout: 5000});
-    } catch (e) {
-      console.error('Selector not found after 5 seconds ', selector);
-      result.push(null);
-      continue;
+    const pageData = await page.evaluate(() => {
+      return {
+        html: document.documentElement.innerHTML,
+      };
+    });
+    // console.log('Page data ', pageData);
+    
+    for (const selector of selectors) {
+      try {
+        await page.waitForSelector(selector, {timeout: 5000});
+      } catch (e) {
+        console.error('Selector not found after 5 seconds ', selector);
+        result.push(null);
+        continue;
+      }
+      
+      const $ = cheerio.load(pageData.html);
+      var text = $(selector).text();
+      result.push(text);
     }
     
-    const $ = cheerio.load(pageData.html);
-    var text = $(selector).text();
-    result.push(text);
+    console.log('Scraped from URL: ' + url + '\n', result);
+    return result;
+  } finally {
+    browser.close();
   }
-  
-  browser.close();
-
-  console.log('Scraped from URL: ' + url + '\n', result);
-  return result;
 }
