@@ -6,11 +6,11 @@
 const url = 'https://www.proshop.dk/Mus/Logitech-G903-LIGHTSPEED-HERO-Wireless-Gaming-Mus-Optisk-11-knapper-Sort-med-RGB-lys/2778872';
 const productSelector = 'h1[data-type="product"]';
 const priceSelector = 'span.site-currency-wrapper > span.site-currency-attention';
-scrape(url, [productSelector, priceSelector])
+scrapeWebsite(url, [productSelector, priceSelector])
   .then(result => console.log('Result ', result));
 
 
-async function scrape(url, selectors, verbose = false) {
+async function scrapeWebsite(url, selectors, verbose = false) {
   const cheerio = require('cheerio'); // For light weight scraping
   const puppeteer = require('puppeteer'); // For more advanced scraping
 
@@ -52,3 +52,5 @@ async function scrape(url, selectors, verbose = false) {
     browser.close();
   }
 }
+
+module.exports = scrapeWebsite;

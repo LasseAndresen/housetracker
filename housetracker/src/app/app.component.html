@@ -1,9 +1,10 @@
 <div style="display: flex; flex-direction: column; width: 100%; height: 100%; background: white">
-    <header style="padding: 12px">
+    <header style="padding-left: 12px">
         <h2>House Tracker</h2>
     </header>
     <main style="display: flex; flex-grow: 1; min-height: 0; min-width: 0;">
-        <div style="height: 100%; width: 100%">
+        <div style="height: 100%; width: 100%; padding: 12px">
+            <h3>Tracked listings</h3>
             <section class="horizontal-container">
                 <mat-card appearance="outlined" style="max-width: 400%; margin: 8px">
                     <mat-card-header>
@@ -23,6 +24,7 @@
                     (click)="openDialog()">
                 Add listing
             </button>
+            <h3>Tracked filters</h3>
         </div>
     </main>
 </div>

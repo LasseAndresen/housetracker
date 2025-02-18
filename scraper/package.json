@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "docker build -t scraper-api .",
+    "start": "docker run -p 3000:3000 --rm scraper-api",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0",
+    "express": "^4.21.2",
     "puppeteer": "^24.2.1",
     "ts-node": "^10.9.2"
   }

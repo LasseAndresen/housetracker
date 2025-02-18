@@ -1,0 +1,8 @@
+GET http://localhost:3000/scrape?url=https://example.com&selectors=h1&selectors=p
+
+###
+GET http://localhost:3000/scrape?url=https%3A%2F%2Fwww.proshop.dk%2FMus%2FLogitech-G903-LIGHTSPEED-HERO-Wireless-Gaming-Mus-Optisk-11-knapper-Sort-med-RGB-lys%2F2778872&selectors=h1%5Bdata-type%3D%22product%22%5D&selectors=span.site-currency-wrapper%20%3E%20span.site-currency-attention
+
+
+
+
