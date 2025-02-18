@@ -4,6 +4,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle, MatCardSubtitle} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
+import {provideHttpClient, withFetch} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',

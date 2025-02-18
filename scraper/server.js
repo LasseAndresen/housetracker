@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const scrapeWebsite = require('./scraper');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors()); // Allow all origins to access
 
 app.get('/scrape', async (req, res) => {
     const { url, selectors } = req.query;

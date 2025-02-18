@@ -26,21 +26,33 @@ async function scrapeWebsite(url, selectors, verbose = false) {
         html: document.documentElement.innerHTML,
       };
     });
+    const $ = cheerio.load(pageData.html);
     if (verbose) {
       console.log('Page data ', pageData);
     }
     
-    for (const selector of selectors) {
+    for (let selector of selectors) {
+      let type = 'string';
+      if (selector.startsWith('!img!')) {
+        type = 'image';
+        selector = selector.substring(5);
+      }
       try {
         await page.waitForSelector(selector, {timeout: 5000});
       } catch (e) {
-        console.error('Selector not found after 5 seconds ', selector);
+        console.log('Selector not found after 5 seconds ', selector);
         result.push(null);
         continue;
       }
       
-      const $ = cheerio.load(pageData.html);
-      var text = $(selector).text();
+      let text;
+      if (type === 'image') {
+        const img = $(selector).attr('src');
+        result.push(img);
+      } else {
+        text = $(selector).text();
+      }
+      
       result.push(text);
     }
 
