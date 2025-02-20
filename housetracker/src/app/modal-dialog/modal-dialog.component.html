@@ -7,23 +7,22 @@
 
     <!-- Display the result vertically -->
     <div *ngIf="scraperResult">
-        <h3>Product Details</h3>
         <div *ngIf="scraperResult.name">
-            <strong>Product Name:</strong> {{ scraperResult.name }}
+            <h3>{{ scraperResult.name }}</h3>
         </div>
         <div *ngIf="scraperResult.price">
             <strong>Price:</strong> {{ scraperResult.price }}
         </div>
         <div *ngIf="scraperResult.image">
-            <strong>Image:</strong>
-            <img [src]="scraperResult.image" alt="Product Image" style="max-width: 200px;">
+            <img [src]="scraperResult.image" alt="Product Image" style="max-width: 400px;">
         </div>
         <div *ngIf="scraperResult.additionalInfo">
-            <strong>Additional Info:</strong> {{ scraperResult.additionalInfo }}
+            {{ scraperResult.additionalInfo }}
         </div>
     </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
+    <button mat-button (click)="confirm()">Confirm</button>
     <button mat-button (click)="close()">Close</button>
 </mat-dialog-actions>

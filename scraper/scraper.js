@@ -3,11 +3,11 @@
  * To run this script, copy and paste `node scraper.js` in the terminal
  */
 
-const url = 'https://www.proshop.dk/Mus/Logitech-G903-LIGHTSPEED-HERO-Wireless-Gaming-Mus-Optisk-11-knapper-Sort-med-RGB-lys/2778872';
+/*const url = 'https://www.proshop.dk/Mus/Logitech-G903-LIGHTSPEED-HERO-Wireless-Gaming-Mus-Optisk-11-knapper-Sort-med-RGB-lys/2778872';
 const productSelector = 'h1[data-type="product"]';
 const priceSelector = 'span.site-currency-wrapper > span.site-currency-attention';
 scrapeWebsite(url, [productSelector, priceSelector])
-  .then(result => console.log('Result ', result));
+  .then(result => console.log('Result ', result));*/
 
 
 async function scrapeWebsite(url, selectors, verbose = false) {
@@ -33,9 +33,12 @@ async function scrapeWebsite(url, selectors, verbose = false) {
     
     for (let selector of selectors) {
       let type = 'string';
-      if (selector.startsWith('!img!')) {
+      if (selector.startsWith('_img_')) {
         type = 'image';
         selector = selector.substring(5);
+      } else if (selector.startsWith('_first_')) {
+        type = 'firstInList';
+        selector = selector.substring(7);
       }
       try {
         await page.waitForSelector(selector, {timeout: 5000});
@@ -47,8 +50,15 @@ async function scrapeWebsite(url, selectors, verbose = false) {
       
       let text;
       if (type === 'image') {
-        const img = $(selector).attr('src');
-        result.push(img);
+        const img = $(selector).find('img').attr('src');
+        text = img;
+      } else if (type === 'firstInList') {
+        const elements = $(selector);
+        if (elements.length > 0) {
+          text = elements.first().text();
+        } else {
+          text = text.text();
+        }
       } else {
         text = $(selector).text();
       }

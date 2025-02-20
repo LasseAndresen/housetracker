@@ -41,17 +41,23 @@ export class ModalDialogComponent {
     this.dialogRef.close();
   }
 
+  confirm(): void {
+    // TODO
+    this.dialogRef.close();
+  }
+
   // Handle input changes and call scraper API
   onInputChange(): void {
     if (this.inputUrl && this.inputUrl.trim()) {
       this.fetchProductDetails(this.inputUrl).subscribe(
         (response) => {
           // Assuming response contains name, price, image URL, and additional info
+          console.log('Response ', response);
           this.scraperResult = {
-            name: response.name,
-            price: response.price,
-            image: response.imageUrl,  // Assuming the image URL is returned as 'imageUrl'
-            additionalInfo: response.additionalInfo,
+            name: response[0],
+            price: response[1],
+            image: response[2],  // Assuming the image URL is returned as 'imageUrl'
+            additionalInfo: response[3],
           };
         },
         (error) => {
@@ -69,10 +75,10 @@ export class ModalDialogComponent {
     const apiUrl = 'http://localhost:3000/scrape';  // Your scraper API endpoint
     const params = {
       url: url,
-      selectors: ['h1.media-presentation__case-info__property__info__title"',
+      selectors: ['[data-property-group]',
         'div.case-facts__box-title__price',
-        '!img!.media-presentation__minified__left',
-        'div.case-facts__box-inner-wrap'] // Example selectors
+        '_img_.media-presentation__minified__left',
+        '_first_div.case-facts__box-inner-wrap'] // Example selectors
     };
 
     try {
