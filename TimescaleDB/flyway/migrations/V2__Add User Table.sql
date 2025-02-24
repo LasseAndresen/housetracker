@@ -1,0 +1,10 @@
+create table Users (
+    ID SERIAL PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Email TEXT UNIQUE NOT NULL,
+    PasswordEncrypted TEXT NOT NULL,
+    DateAdded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    LastLogin TIMESTAMP DEFAULT NULL,
+    IsActive BOOLEAN DEFAULT TRUE,
+    IsAdmin BOOLEAN DEFAULT FALSE
+)

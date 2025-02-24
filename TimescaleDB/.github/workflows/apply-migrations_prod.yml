@@ -1,0 +1,32 @@
+name: Apply Flyway Migrations On Production
+
+on:
+  workflow_dispatch: # Manual trigger for controlled deployments
+    inputs:
+      environment:
+        description: "Target Environment"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  migrate-db-prod:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Flyway Migrations in Docker
+        run: |
+          docker run --rm \
+            -v "$(pwd)/flyway/migrations:/flyway/sql" \
+            flyway/flyway:10 \
+            -url=jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }} \
+            -user=${{ secrets.DB_USER }} \
+            -password=${{ secrets.DB_PASSWORD }} \
+            migrate
