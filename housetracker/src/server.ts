@@ -7,10 +7,12 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { initializeDatabase } from '../data-source';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
+await initializeDatabase();
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
@@ -36,6 +38,13 @@ app.use(
     redirect: false,
   }),
 );
+
+app.post('/addListing', (req, res) => {
+  const { url, userID } = req.body;
+  // Add to listings if missing
+
+  // Add UserListing link
+});
 
 /**
  * Handle all other requests by rendering the Angular application.

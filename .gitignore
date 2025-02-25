@@ -39,6 +39,8 @@ testem.log
 .env
 .secrets
 *.log
+database.js
+ormconfig.json
 
 # System files
 .DS_Store
