@@ -1,4 +1,4 @@
-create table Users (
+create table UserAccount (
     ID SERIAL PRIMARY KEY,
     Name TEXT NOT NULL,
     Email TEXT UNIQUE NOT NULL,

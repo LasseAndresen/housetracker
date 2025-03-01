@@ -1,6 +1,7 @@
-create table Listings (
+create table Listing (
     ID SERIAL PRIMARY KEY,
     EXTERNALID VARCHAR(255) NOT NULL,
+    URL TEXT NOT NULL,
     Title TEXT NOT NULL,
     Description TEXT NOT NULL,
     PriceDKK INTEGER NOT NULL,
