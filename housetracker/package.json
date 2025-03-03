@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:housetracker": "node dist/housetracker/server/server.mjs",
+    "reset-db": "docker volume rm timescale_data",
     "start-db": "node -r dotenv/config scripts/start-database.js",
+    "migrate-db": "node -r dotenv/config scripts/migrate-database.js",
     "generate-entities": "node -r dotenv/config scripts/generate-entities.js"
   },
   "private": true,

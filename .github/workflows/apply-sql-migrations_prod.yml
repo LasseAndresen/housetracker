@@ -21,12 +21,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run Flyway Migrations in Docker
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install dotenv
+
+      - name: Debug Paths
         run: |
-          docker run --rm \
-            -v "$(pwd)/flyway/migrations:/flyway/sql" \
-            flyway/flyway:10 \
-            -url=jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }} \
-            -user=${{ secrets.DB_USER }} \
-            -password=${{ secrets.DB_PASSWORD }} \
-            migrate
+          echo "Current directory inside act: $(pwd)"
+          ls -lah timescaledb/flyway/migrations
+
+      - name: Run Flyway Migrations in Docker
+        env:
+          DB_HOST_DOCKER: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+        run: |
+          node housetracker/scripts/migrate-database.js
