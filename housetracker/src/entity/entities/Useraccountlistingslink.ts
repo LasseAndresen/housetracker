@@ -1,4 +1,4 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne , BaseEntity} from "typeorm";
 import { Listing } from "./Listing";
 import { Useraccount } from "./Useraccount";
 
@@ -6,7 +6,7 @@ import { Useraccount } from "./Useraccount";
   unique: true,
 })
 @Entity("useraccountlistingslink", { schema: "public" })
-export class Useraccountlistingslink {
+export class Useraccountlistingslink extends BaseEntity {
   @Column("integer", { primary: true, name: "useraccountid" })
   useraccountid: number;
 

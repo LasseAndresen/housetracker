@@ -4,12 +4,12 @@ import {
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
+, BaseEntity} from "typeorm";
 import { Useraccountlistingslink } from "./Useraccountlistingslink";
 
 @Index("listing_pkey", ["id"], { unique: true })
 @Entity("listing", { schema: "public" })
-export class Listing {
+export class Listing extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
