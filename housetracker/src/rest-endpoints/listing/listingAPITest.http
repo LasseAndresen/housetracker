@@ -1,0 +1,3 @@
+GET http://localhost:3000/scrape?url=https://example.com&selectors=h1&selectors=p
+
+GET http://localhost:4200/

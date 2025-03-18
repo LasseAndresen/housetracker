@@ -4,7 +4,7 @@ import {
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
-, BaseEntity} from "typeorm";
+  BaseEntity} from "typeorm";
 import { Useraccountlistingslink } from "./Useraccountlistingslink";
 
 @Index("useraccount_email_key", ["email"], { unique: true })

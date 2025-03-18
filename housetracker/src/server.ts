@@ -8,12 +8,15 @@ import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { initializeDatabase } from '../data-source';
+import { ListingEndpoints } from './rest-endpoints/listing/listingEndpoints';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 await initializeDatabase();
 const app = express();
+ListingEndpoints.initialize(app);
+
 const angularApp = new AngularNodeAppEngine();
 
 /**
@@ -39,13 +42,6 @@ app.use(
   }),
 );
 
-app.post('/addListing', (req, res) => {
-  const { url, userID } = req.body;
-  // Add to listings if missing
-
-  // Add UserListing link
-});
-
 /**
  * Handle all other requests by rendering the Angular application.
  */
@@ -62,6 +58,7 @@ app.use('/**', (req, res, next) => {
  * Start the server if this module is the main entry point.
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
+console.log('Is main module? ', isMainModule(import.meta.url));
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, () => {
