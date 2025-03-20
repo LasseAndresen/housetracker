@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "build:ssr": "ng build && ng run <your-project-name>:server",
     "serve:ssr:housetracker": "node dist/housetracker/server/server.mjs",
     "reset-db": "docker volume rm timescale_data",
     "start-db": "node -r dotenv/config scripts/start-database.js",
@@ -14,6 +15,7 @@
     "generate-entities": "node -r dotenv/config scripts/generate-entities.js"
   },
   "private": true,
+  "type": "module",
   "dependencies": {
     "@angular/animations": "^19.1.0",
     "@angular/cdk": "^19.1.4",

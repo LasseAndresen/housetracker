@@ -15,6 +15,7 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 await initializeDatabase();
 const app = express();
+app.use(express.json());
 ListingEndpoints.initialize(app);
 
 const angularApp = new AngularNodeAppEngine();
