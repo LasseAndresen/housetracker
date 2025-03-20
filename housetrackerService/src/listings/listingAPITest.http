@@ -1,0 +1,8 @@
+### Add Listing Example Request
+POST http://localhost:3000/listings/addListing
+Content-Type: application/json
+
+{
+  "url": "https://example.com/some-listing-page",
+  "userID": 123
+}
