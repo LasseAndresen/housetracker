@@ -15,7 +15,6 @@
     "generate-entities": "node -r dotenv/config scripts/generate-entities.js"
   },
   "private": true,
-  "type": "module",
   "dependencies": {
     "@angular/animations": "^19.1.0",
     "@angular/cdk": "^19.1.4",
