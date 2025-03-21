@@ -38,7 +38,7 @@ import {Listing, Useraccount, Useraccountlistingslink} from "./entity/entities";
           database: configService.get<string>('DB_NAME'),
           synchronize: false, // Only true in dev!
           logging: true,
-          entities: [/*Listing, Useraccount, Useraccountlistingslink*/],
+          entities: [Listing, Useraccount, Useraccountlistingslink],
         }
       }
     })

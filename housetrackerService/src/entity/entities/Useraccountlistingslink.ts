@@ -1,4 +1,4 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne , BaseEntity} from "typeorm";
+import {Column, Entity, Index, JoinColumn, ManyToOne, BaseEntity, Relation} from "typeorm";
 import { Listing } from "./index";
 import { Useraccount } from "./index";
 
@@ -24,7 +24,7 @@ export class Useraccountlistingslink extends BaseEntity {
     onDelete: "CASCADE",
   })
   @JoinColumn([{ name: "listingid", referencedColumnName: "id" }])
-  listing: Listing;
+  listing: Relation<Listing>;
 
   @ManyToOne(
     () => Useraccount,
@@ -32,5 +32,5 @@ export class Useraccountlistingslink extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn([{ name: "useraccountid", referencedColumnName: "id" }])
-  useraccount: Useraccount;
+  useraccount: Relation<Useraccount>;
 }

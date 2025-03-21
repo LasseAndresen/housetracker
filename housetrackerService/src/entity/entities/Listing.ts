@@ -4,7 +4,8 @@ import {
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
-  BaseEntity} from "typeorm";
+  BaseEntity, Relation
+} from "typeorm";
 import { Useraccountlistingslink } from "./index";
 
 @Index("listing_pkey", ["id"], { unique: true })
@@ -48,5 +49,5 @@ export class Listing extends BaseEntity {
     () => Useraccountlistingslink,
     (useraccountlistingslink) => useraccountlistingslink.listing
   )
-  useraccountlistingslinks: Useraccountlistingslink[];
+  useraccountlistingslinks: Relation<Useraccountlistingslink[]>;
 }
