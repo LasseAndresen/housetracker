@@ -1,14 +1,17 @@
-import {Controller, Post, Req} from '@nestjs/common';
-import {Request} from 'express';
+import {Controller, Post, Req, Res} from '@nestjs/common';
+import {Request, Response} from 'express';
 import {ListingsService} from "./listings.service";
+import {endpointWrapper} from "../utilities/endpointUtilities";
 
 @Controller('listings')
 export class ListingsController {
 
   constructor(private _listingsService: ListingsService) {}
   @Post('addListing')
-  addListing(@Req() request: Request): void {
-    const { url, userID } = request.body;
-    this._listingsService.addListing(url, userID);
+  async addListing(@Req() request: Request, @Res() response: Response): Promise<void> {
+    await endpointWrapper(async () => {
+      const { url, userID } = request.body;
+      await this._listingsService.addListing(url, userID);
+    }, response);
   }
 }
