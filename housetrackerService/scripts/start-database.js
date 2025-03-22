@@ -21,7 +21,7 @@ try {
     const runCommand = `docker run -d `
         + `--name ${containerName} `
         + `-p ${process.env.DB_PORT}:5432 `
-        + `-e POSTGRES_PASSWORD=${process.env.DB_PASS} `
+        + `-e POSTGRES_PASSWORD=${process.env.DB_PASSWORD} `
         + `-e POSTGRES_USER=${process.env.DB_USER} `
         + `-e POSTGRES_DB=${containerName} `
         + `-v timescale_data:/var/lib/postgresql/data `

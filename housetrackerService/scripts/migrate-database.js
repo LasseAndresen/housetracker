@@ -21,7 +21,7 @@ const command = `docker run --rm \
             flyway/flyway:10 \
             -url=jdbc:postgresql://${ process.env.DB_HOST_DOCKER }:${ process.env.DB_PORT }/${ process.env.DB_NAME } \
             -user=${ process.env.DB_USER } \
-            -password=${ process.env.DB_PASS } \
+            -password=${ process.env.DB_PASSWORD } \
             migrate`;
 
   console.log('Starting migration of TimescaleDB...');

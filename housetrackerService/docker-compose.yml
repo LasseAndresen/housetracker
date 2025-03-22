@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg15
+    container_name: timescale-db
+    ports:
+      - '${DB_PORT:-5432}:5432'
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: flyway/flyway:10
+    container_name: migrate-db
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - ../timescaledb/flyway/migrations:/flyway/sql
+    command: >
+      -url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      -user=${DB_USER}
+      -password=${DB_PASSWORD}
+      -locations=filesystem:/flyway/sql
+      migrate
+    restart: "no"
+
+  backend:
+    build: .
+    container_name: nestjs-backend
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+      - migrate
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+volumes:
+  timescale_data:
