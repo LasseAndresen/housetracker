@@ -22,15 +22,16 @@ services:
     image: flyway/flyway:10
     container_name: migrate-db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DB_HOST=${DB_HOST}
-      - DB_PORT=5432
+      - DB_PORT={DB_PORT}
       - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASSWORD}
+      - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     volumes:
-      - ../timescaledb/flyway/migrations:/flyway/sql
+      - ./timescaledb/flyway/migrations:/flyway/sql
     command: >
       -url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
       -user=${DB_USER}
@@ -40,18 +41,25 @@ services:
     restart: "no"
 
   backend:
-    build: .
+    build: housetrackerService
     container_name: nestjs-backend
     ports:
       - '3000:3000'
     volumes:
-      - .:/app
-      - /app/node_modules
+      - /housetrackerService/app
+      - /housetrackerService/app/node_modules
     depends_on:
-      - db
-      - migrate
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     environment:
       - NODE_ENV=development
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     command: npm run start:dev
 
 volumes:
