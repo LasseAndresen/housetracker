@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "docker build -t scraper-api .",
-    "start": "docker run -p 3000:3000 --rm scraper-api",
+    "start": "docker run -p 3002:3002 --rm scraper-api",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

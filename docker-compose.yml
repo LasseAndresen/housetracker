@@ -53,6 +53,8 @@ services:
         condition: service_healthy
       migrate:
         condition: service_completed_successfully
+      scraper-api:
+        condition: service_started
     environment:
       - NODE_ENV=development
       - DB_HOST=${DB_HOST}
@@ -61,6 +63,15 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     command: npm run start:dev
+
+  scraper-api:
+    build: scraper
+    container_name: scraper-api
+    ports:
+      - '3002:3002'
+    environment:
+      - PORT=3002
+    command: node server.js
 
 volumes:
   timescale_data:

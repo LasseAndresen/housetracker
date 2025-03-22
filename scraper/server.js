@@ -3,7 +3,7 @@ const cors = require('cors');
 const scrapeWebsite = require('./scraper');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 app.use(express.json());
 app.use(cors()); // Allow all origins to access
