@@ -7,16 +7,11 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { initializeDatabase } from '../data-source';
-import { ListingEndpoints } from './rest-endpoints/listing/listingEndpoints';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
-await initializeDatabase();
 const app = express();
-app.use(express.json());
-ListingEndpoints.initialize(app);
 
 const angularApp = new AngularNodeAppEngine();
 
