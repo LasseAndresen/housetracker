@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:ssr": "ng build && ng run <your-project-name>:server",
+    "build:ssr": "ng build --configuration production && ng run housetracker:build:production",
     "serve:ssr:housetracker": "node dist/housetracker/server/server.mjs"
   },
   "private": true,

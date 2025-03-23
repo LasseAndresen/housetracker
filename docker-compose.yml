@@ -73,5 +73,15 @@ services:
       - PORT=3002
     command: node server.js
 
+  angular-ssr:
+    build: ./housetracker
+    container_name: angular-ssr
+    ports:
+      - "4200:4000"  # map container port 4000 to host port 4200
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend  # if it needs the backend
+
 volumes:
   timescale_data:
