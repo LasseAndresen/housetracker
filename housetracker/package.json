@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:ssr": "ng build --configuration production && ng run housetracker:build:production",
-    "serve:ssr:housetracker": "node dist/housetracker/server/server.mjs"
+    "build:watch": "ng build --watch",
+    "serve:ssr:housetracker": "node dist/housetracker/server/server.mjs",
+    "serve:ssr:watch": "nodemon",
+    "watch:all": "concurrently \"ng build --watch\" \"nodemon dist/housetracker/server/server.mjs\""
   },
   "private": true,
   "dependencies": {
@@ -42,6 +45,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
+    "nodemon": "^3.1.9",
+    "typescript": "~5.7.2",
+    "concurrently": "^9.1.2"
   }
 }

@@ -1,0 +1,7 @@
+# Dev stage
+FROM node:20-alpine AS dev
+WORKDIR /app
+COPY . .
+RUN npm ci
+RUN npm run build
+CMD ["npm", "run", "watch:all"]

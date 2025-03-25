@@ -1,0 +1,6 @@
+{
+  "watch": ["dist/housetracker"],
+  "ext": "js,json,mjs",
+  "exec": "node dist/housetracker/server/server.mjs",
+  "delay": "1"
+}

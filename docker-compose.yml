@@ -63,6 +63,17 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: ./housetrackerService
+          target: /app
+          ignore:
+            - node_modules/
+            - dist/
+            - .git/
+        - action: rebuild
+          path: ./housetrackerService
 
   scraper-api:
     build: scraper
@@ -72,16 +83,58 @@ services:
     environment:
       - PORT=3002
     command: node server.js
+    develop:
+      watch:
+        - action: sync
+          path: ./scraper
+          target: /app
+          ignore:
+            - node_modules/
+            - dist/
+            - .git/
+        - action: rebuild
+          path: ./scraper
 
   angular-ssr:
-    build: ./housetracker
+    build:
+      context: /housetracker
+      dockerfile: dockerfile_dev
     container_name: angular-ssr
     ports:
       - "4200:4000"  # map container port 4000 to host port 4200
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     depends_on:
-      - backend  # if it needs the backend
+      - backend
+    command: npm run watch:all
+#    volumes:
+#      - ./housetracker:/app
+#      - /app/node_modules/
+    develop:
+      watch:
+        - action: sync
+          path: ./housetracker
+          target: /app
+          ignore:
+            - node_modules/
+            - .angular/
+            - dist/
+            - .git/
+        - action: rebuild
+          path: ./housetracker
+#  angular-ssr:
+#    build: /housetracker
+#    container_name: angular-ssr
+#    ports:
+#      - "4200:4000"  # map container port 4000 to host port 4200
+#    environment:
+#      - NODE_ENV=development
+#    depends_on:
+#      - backend  # if it needs the backend
+#    command: npm run watch:all
+#    volumes:
+#      - ./housetracker:/app
+#      - /app/node_modules/
 
 volumes:
   timescale_data:

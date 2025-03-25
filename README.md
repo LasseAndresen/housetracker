@@ -11,6 +11,7 @@ Enables tracking of real estate listings or filters by scraping URL's on a conti
 Every entry in the stack is dockerized with hot-reloading enabled.
 
 ## Running the whole stack
-docker-compose up --build
+- **Dev mode:** docker-compose watch 
+- **Without watch:** docker-compose up --build
 
 The project will be accessible on localhost:4200
