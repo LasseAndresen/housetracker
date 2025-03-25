@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
@@ -10,9 +10,9 @@ import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 
 @Component({
-  selector: 'app-modal-dialog',
-  templateUrl: './modal-dialog.component.html',
-  styleUrl: './modal-dialog.component.scss',
+  selector: 'app-addListing-dialog',
+  templateUrl: './addListing-dialog.component.html',
+  styleUrl: './addListing-dialog.component.scss',
   imports: [
     MatDialogContent,
     MatFormField,
@@ -26,13 +26,13 @@ import {MatInput} from "@angular/material/input";
   ],
   standalone: true
 })
-export class ModalDialogComponent {
+export class AddListingDialogComponent {
   inputUrl: string = '';
   scraperResult: any = null;
 
   // Injecting HttpClient to make API calls
   constructor(
-    public dialogRef: MatDialogRef<ModalDialogComponent>,
+    public dialogRef: MatDialogRef<AddListingDialogComponent>,
     private http: HttpClient
   ) {}
 
@@ -42,7 +42,23 @@ export class ModalDialogComponent {
   }
 
   confirm(): void {
-    // TODO
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const apiUrl = 'http://localhost:3000/listings/addListing';
+    const params = {
+      url: this.inputUrl,
+      userID: null
+    }
+
+    this.http.post(apiUrl, params, { headers }).subscribe(
+      (response) => {
+        console.log('Response ', response);
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    )
     this.dialogRef.close();
   }
 
@@ -72,7 +88,7 @@ export class ModalDialogComponent {
 
   // Function to call the scraper API
   fetchProductDetails(url: string): Observable<any> {
-    const apiUrl = 'http://localhost:3000/scrape';  // Your scraper API endpoint
+    const apiUrl = 'http://localhost:3002/scrape';
     const params = {
       url: url,
       selectors: ['[data-property-group]',
