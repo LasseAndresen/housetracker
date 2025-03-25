@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
+import {ListingsService} from "../data-access/listingsService";
 
 @Component({
   selector: 'app-addListing-dialog',
@@ -33,37 +34,22 @@ export class AddListingDialogComponent {
   // Injecting HttpClient to make API calls
   constructor(
     public dialogRef: MatDialogRef<AddListingDialogComponent>,
-    private http: HttpClient
+    private http: HttpClient,
+    private _listingsService: ListingsService
   ) {}
 
   // Close dialog function
-  close(): void {
+  public close(): void {
     this.dialogRef.close();
   }
 
-  confirm(): void {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    const apiUrl = 'http://localhost:3000/listings/addListing';
-    const params = {
-      url: this.inputUrl,
-      userID: null
-    }
-
-    this.http.post(apiUrl, params, { headers }).subscribe(
-      (response) => {
-        console.log('Response ', response);
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-      }
-    )
+  public async confirm(): Promise<void> {
+    await this._listingsService.addListing(this.inputUrl);
     this.dialogRef.close();
   }
 
   // Handle input changes and call scraper API
-  onInputChange(): void {
+  public onInputChange(): void {
     if (this.inputUrl && this.inputUrl.trim()) {
       this.fetchProductDetails(this.inputUrl).subscribe(
         (response) => {
@@ -87,7 +73,7 @@ export class AddListingDialogComponent {
   }
 
   // Function to call the scraper API
-  fetchProductDetails(url: string): Observable<any> {
+  private fetchProductDetails(url: string): Observable<any> {
     const apiUrl = 'http://localhost:3002/scrape';
     const params = {
       url: url,
