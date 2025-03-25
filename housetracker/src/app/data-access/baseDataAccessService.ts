@@ -7,20 +7,25 @@ export abstract class BaseDataAccessService {
 
   constructor(private http: HttpClient) {}
 
-  protected makePostRequest(body: any, methodName: string): Promise<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+  protected async post<T>(body: any, methodName: string): Promise<T | null> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    try {
+      const result = await this.http.post<T>(this._baseUrl + methodName, body, { headers }).toPromise();
+      return result as T;
+    } catch (error) {
+      console.error('POST request failed:', error);
+      return null;
+    }
+  }
 
-    return this.http.post(this._baseUrl + methodName, body, { headers })
-      .toPromise()
-      .then(response => {
-        console.log('Response:', response); // Handle the response here
-        return response;
-      })
-      .catch(error => {
-        console.error('Error:', error); // Handle the error here
-        throw error;
-      });
+  // Example private GET method (optional)
+  protected async get<T>(params: any, methodName: string): Promise<T | null> {
+    try {
+      const result = await this.http.get<T>(this._baseUrl + methodName, { params }).toPromise();
+      return result as T;
+    } catch (error) {
+      console.error('GET request failed:', error);
+      return null;
+    }
   }
 }

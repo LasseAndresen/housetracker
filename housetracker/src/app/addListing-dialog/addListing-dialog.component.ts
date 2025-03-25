@@ -9,6 +9,7 @@ import {NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {ListingsService} from "../data-access/listingsService";
+import {ScraperService} from "../data-access/scraperService";
 
 @Component({
   selector: 'app-addListing-dialog',
@@ -35,7 +36,8 @@ export class AddListingDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddListingDialogComponent>,
     private http: HttpClient,
-    private _listingsService: ListingsService
+    private _listingsService: ListingsService,
+    private _scraperService: ScraperService
   ) {}
 
   // Close dialog function
@@ -51,7 +53,7 @@ export class AddListingDialogComponent {
   // Handle input changes and call scraper API
   public onInputChange(): void {
     if (this.inputUrl && this.inputUrl.trim()) {
-      this.fetchProductDetails(this.inputUrl).subscribe(
+      this.fetchProductDetails(this.inputUrl).then(
         (response) => {
           // Assuming response contains name, price, image URL, and additional info
           console.log('Response ', response);
@@ -73,18 +75,13 @@ export class AddListingDialogComponent {
   }
 
   // Function to call the scraper API
-  private fetchProductDetails(url: string): Observable<any> {
-    const apiUrl = 'http://localhost:3002/scrape';
-    const params = {
-      url: url,
-      selectors: ['[data-property-group]',
+  private async fetchProductDetails(url: string): Promise<any> {
+    try {
+      const selectors = ['[data-property-group]',
         'div.case-facts__box-title__price',
         '_img_.media-presentation__minified__left',
-        '_first_div.case-facts__box-inner-wrap'] // Example selectors
-    };
-
-    try {
-      return this.http.get<any>(apiUrl, { params });
+        '_first_div.case-facts__box-inner-wrap'];
+      return this._scraperService.fetchProductDetails(url, selectors);
     } catch (error) {
       console.error('Error fetching scraper data', error);
       throw error;

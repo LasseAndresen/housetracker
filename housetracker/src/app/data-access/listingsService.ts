@@ -15,6 +15,6 @@ export class ListingsService extends BaseDataAccessService {
       userID: null
     }
 
-    await this.makePostRequest(params, 'addListing');
+    await this.post(params, 'addListing');
   }
 }
