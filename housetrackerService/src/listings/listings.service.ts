@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {DataSource} from "typeorm";
 import {Listing} from "../entity/entities";
+import {ListingDto} from "@housetracker/shared-dtos";
 
 @Injectable()
 export class ListingsService {
@@ -34,5 +35,9 @@ export class ListingsService {
     }
 
     // Add UserListing link
+  }
+
+  public getListings(): ListingDto[] {
+    return [];
   }
 }

@@ -1,6 +1,7 @@
 import {environment} from "../../environments/environment";
 import {BaseDataAccessService} from "./baseDataAccessService";
 import {Injectable} from "@angular/core";
+import {ListingDto} from "@housetracker/shared-dtos";
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,13 @@ export class ListingsService extends BaseDataAccessService {
     }
 
     await this.post(params, 'addListing');
+  }
+
+  public async getListings(): Promise<any> {
+    const params = {
+      userID: null
+    }
+    const response = await this.get<ListingDto[]>(params, 'getListings');
+    return response;
   }
 }
