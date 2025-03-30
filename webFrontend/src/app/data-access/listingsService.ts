@@ -1,7 +1,7 @@
 import {environment} from "../../environments/environment";
 import {BaseDataAccessService} from "./baseDataAccessService";
 import {Injectable} from "@angular/core";
-import {ListingDto} from "@housetracker/shared-dtos";
+import {ListingDto} from "../../../../packages/shared-dtos/src/listing.dto";
 
 @Injectable({
   providedIn: 'root'

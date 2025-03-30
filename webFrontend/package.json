@@ -11,7 +11,8 @@
     "build:watch": "ng build --watch",
     "serve:ssr:housetracker": "node dist/housetracker/server/server.mjs",
     "serve:ssr:watch": "nodemon",
-    "watch:all": "concurrently \"ng build --watch\" \"nodemon dist/housetracker/server/server.mjs\""
+    "watch:all": "concurrently \"ng build --watch\" \"nodemon dist/housetracker/server/server.mjs\"",
+    "build:shared-dtos": "tsc -p ../packages/shared-dtos/tsconfig.json"
   },
   "private": true,
   "dependencies": {

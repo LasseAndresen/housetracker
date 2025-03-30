@@ -1,6 +1,6 @@
 /**
- * scraper.js
- * To run this script, copy and paste `node scraper.js` in the terminal
+ * scraperService.js
+ * To run this script, copy and paste `node scraperService.js` in the terminal
  */
 
 /*const url = 'https://www.proshop.dk/Mus/Logitech-G903-LIGHTSPEED-HERO-Wireless-Gaming-Mus-Optisk-11-knapper-Sort-med-RGB-lys/2778872';

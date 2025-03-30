@@ -50,7 +50,7 @@ export class AddListingDialogComponent {
     this.dialogRef.close();
   }
 
-  // Handle input changes and call scraper API
+  // Handle input changes and call scraperService API
   public onInputChange(): void {
     if (this.inputUrl && this.inputUrl.trim()) {
       this.fetchProductDetails(this.inputUrl).then(
@@ -74,7 +74,7 @@ export class AddListingDialogComponent {
     }
   }
 
-  // Function to call the scraper API
+  // Function to call the scraperService API
   private async fetchProductDetails(url: string): Promise<any> {
     try {
       const selectors = ['[data-property-group]',
@@ -83,7 +83,7 @@ export class AddListingDialogComponent {
         '_first_div.case-facts__box-inner-wrap'];
       return this._scraperService.fetchProductDetails(url, selectors);
     } catch (error) {
-      console.error('Error fetching scraper data', error);
+      console.error('Error fetching scraperService data', error);
       throw error;
     }
   }

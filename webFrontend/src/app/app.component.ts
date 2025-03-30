@@ -15,7 +15,7 @@ import {provideHttpClient, withFetch} from "@angular/common/http";
   standalone: true
 })
 export class AppComponent {
-  title = 'housetracker';
+  title = 'webFrontend';
   constructor(public dialog: MatDialog) {}
   openNewListingDialog(): void {
     this.dialog.open(AddListingDialogComponent);
