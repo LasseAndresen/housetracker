@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
 import {DataSource} from "typeorm";
 import {Listing} from "../entity/entities";
 import {ListingDto} from "@lasseandresen/shared-dtos";
+import {ListingsCache} from "./listings.cache";
 
 @Injectable()
 export class ListingsService {
 
-  constructor(private _dataSource: DataSource) {}
+  constructor(private _dataSource: DataSource,
+              private _listingsCache: ListingsCache) {}
   public async addListing(url: string, userID: number) {
     // Add to listings if missing
     const existingListing = await this._dataSource
@@ -37,7 +39,11 @@ export class ListingsService {
     // Add UserListing link
   }
 
-  public getListings(): ListingDto[] {
+  public async scrapeListing(url: string): Promise<ListingDto> {
+    return this._listingsCache.getListing(url);
+  }
+
+  public async getListings(): Promise<ListingDto[]> {
     return [];
   }
 }

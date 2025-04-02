@@ -7,9 +7,13 @@ import {ListingsService} from "./listings/listings.service";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import Joi from "joi";
 import {Listing, Useraccount, Useraccountlistingslink} from "./entity/entities";
+import {ListingsCache} from "./listings/listings.cache";
+import {HttpModule} from "@nestjs/axios";
+import {ScraperService} from "./data-access/scraperService";
 
 @Module({
   imports: [
+    HttpModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -21,6 +25,8 @@ import {Listing, Useraccount, Useraccountlistingslink} from "./entity/entities";
         DB_PASSWORD: Joi.string().required(),
         DB_HOST: Joi.string().default('localhost'),
         DB_PORT: Joi.number().default(5432),
+
+        SCRAPER_SERVICE_URL: Joi.string().required(),
         // Add more env vars here as needed
       }),
     }),
@@ -44,6 +50,6 @@ import {Listing, Useraccount, Useraccountlistingslink} from "./entity/entities";
     })
   ],
   controllers: [AppController, ListingsController],
-  providers: [AppService, ListingsService],
+  providers: [AppService, ScraperService, ListingsService, ListingsCache],
 })
 export class AppModule {}

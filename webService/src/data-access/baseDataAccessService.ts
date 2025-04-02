@@ -1,18 +1,18 @@
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Injectable} from "@angular/core";
+import {Injectable} from "@nestjs/common";
+import { HttpService } from '@nestjs/axios';
 import {firstValueFrom} from "rxjs";
 
 @Injectable()
 export abstract class BaseDataAccessService {
   protected abstract _baseUrl: string;
 
-  constructor(private http: HttpClient) {}
+  protected constructor(private readonly _httpService: HttpService) {}
 
   protected async post<T>(body: any, methodName: string): Promise<T | null> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = { 'Content-Type': 'application/json' };
     try {
       const result = await firstValueFrom(
-        this.http.post<T>(this._baseUrl + methodName, body, { headers })
+        this._httpService.post<T>(this._baseUrl + methodName, body, { headers })
       );
       return result as T;
     } catch (error) {
@@ -25,7 +25,7 @@ export abstract class BaseDataAccessService {
   protected async get<T>(params: any, methodName: string): Promise<T | null> {
     try {
       const result = await firstValueFrom(
-        this.http.get<T>(this._baseUrl + methodName, { params })
+        this._httpService.get<T>(this._baseUrl + methodName, { params })
       );
       return result as T;
     } catch (error) {

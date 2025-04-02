@@ -7,6 +7,15 @@ import {endpointWrapper} from "../utilities/endpointUtilities";
 export class ListingsController {
 
   constructor(private _listingsService: ListingsService) {}
+  @Get('srapeListing')
+  async scrapeListing(@Req() request: Request, @Res() response: Response): Promise<void> {
+    await endpointWrapper(async () => {
+      const url = request.query.url;
+      const listings = await this._listingsService.scrapeListing(url);
+      response.send(listings);
+    }, response);
+  }
+
   @Post('addListing')
   async addListing(@Req() request: Request, @Res() response: Response): Promise<void> {
     await endpointWrapper(async () => {
