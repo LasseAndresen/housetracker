@@ -21,15 +21,16 @@ export class ListingsService {
     if (!existingListing) {
       console.log('Listing did not exist. Adding it.');
       // Add Listing
+      const listing = await this._listingsCache.getListing(url);
       const newListing = new Listing();
       newListing.url = url;
       newListing.externalid = 'test';
-      newListing.title = 'test';
-      newListing.description = 'test';
-      newListing.pricedkk = 100;
-      newListing.imageurl = 'test';
-      newListing.location = 'test';
-      newListing.available = true;
+      newListing.title = listing.title;
+      newListing.description = listing.description;
+      newListing.pricedkk = listing.pricedkk;
+      newListing.imageurl = listing.imageurl;
+      newListing.location = listing.location;
+      newListing.available = listing.available;
       newListing.dateadded = new Date();
       await newListing.save();
     } else {
