@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {DataSource} from "typeorm";
 import {Listing} from "../entity/entities";
-import {ListingDto} from "@housetracker/shared-dtos";
+import {ListingDto} from "@lasseandresen/shared-dtos";
 
 @Injectable()
 export class ListingsService {

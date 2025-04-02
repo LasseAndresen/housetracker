@@ -1,12 +1,28 @@
 {
-  "name": "shared-dtos",
+  "name": "@lasseandresen/shared-dtos",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Shared DTOs for house-tracker",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LasseAndresen/housetracker.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/LasseAndresen/housetracker/issues"
+  },
+  "homepage": "https://github.com/LasseAndresen/housetracker#readme"
 }
