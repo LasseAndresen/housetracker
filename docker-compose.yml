@@ -82,7 +82,6 @@ services:
       - '3002:3002'
     environment:
       - PORT=3002
-    command: node server.js
     develop:
       watch:
         - action: sync

@@ -6,5 +6,6 @@ USER pptruser
 COPY --chown=pptruser:pptruser package*.json ./
 RUN npm install
 COPY --chown=pptruser:pptruser . .
+RUN npx tsc
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.js"]

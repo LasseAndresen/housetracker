@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const scrapeWebsite = require('./scraper');
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import {scrapeWebsite} from "./scraper";
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -8,15 +8,15 @@ const PORT = process.env.PORT || 3002;
 app.use(express.json());
 app.use(cors()); // Allow all origins to access
 
-app.get('/scrape', async (req, res) => {
+app.get('/scrape', async (req: Request, res: Response): Promise<void> => {
     const { url, selectors } = req.query;
 
     if (!url) {
-        return res.status(400).json({ error: "URL parameter is required" });
+        res.status(400).json({ error: "URL parameter is required" });
     }
 
     if (!selectors) {
-        return res.status(400).json({ error: "At least one CSS selector is required" });
+        res.status(400).json({ error: "At least one CSS selector is required" });
     }
 
     // Ensure selectors is an array
