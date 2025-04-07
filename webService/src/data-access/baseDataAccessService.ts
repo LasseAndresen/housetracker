@@ -24,13 +24,14 @@ export abstract class BaseDataAccessService {
   // Example private GET method (optional)
   protected async get<T>(params: any, methodName: string): Promise<T | null> {
     try {
+      console.log('GET request:', this._baseUrl, methodName, params);
       const result = await firstValueFrom(
         this._httpService.get<T>(this._baseUrl + methodName, { params })
       );
-      return result as T;
+      return result.data as T;
     } catch (error) {
       console.error('GET request failed:', error);
-      return null;
+      throw error;
     }
   }
 }

@@ -10,6 +10,7 @@ import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {ListingsService} from "../data-access/listingsService";
 import {ScraperService} from "../data-access/scraperService";
+import {ListingDto} from "@lasseandresen/shared-dtos";
 
 @Component({
   selector: 'app-addListing-dialog',
@@ -29,13 +30,14 @@ import {ScraperService} from "../data-access/scraperService";
   standalone: true
 })
 export class AddListingDialogComponent {
-  inputUrl: string = '';
-  scraperResult: any = null;
+  public inputUrl: string = '';
+  public scraperResult: ListingDto = null;
+  public errorMessage: string = '';
 
   // Injecting HttpClient to make API calls
   constructor(
     public dialogRef: MatDialogRef<AddListingDialogComponent>,
-    private http: HttpClient,
+    private _http: HttpClient,
     private _listingsService: ListingsService,
     private _scraperService: ScraperService
   ) {}
@@ -51,40 +53,28 @@ export class AddListingDialogComponent {
   }
 
   // Handle input changes and call scraperService API
-  public onInputChange(): void {
-    if (this.inputUrl && this.inputUrl.trim()) {
-      this.fetchProductDetails(this.inputUrl).then(
-        (response) => {
-          // Assuming response contains name, price, image URL, and additional info
-          console.log('Response ', response);
-          this.scraperResult = {
-            name: response[0],
-            price: response[1],
-            image: response[2],  // Assuming the image URL is returned as 'imageUrl'
-            additionalInfo: response[3],
-          };
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-          this.scraperResult = null; // Reset result on error
-        }
-      );
-    } else {
-      this.scraperResult = null; // Clear the result if input is empty
+  public async onInputChange(newValue: string): Promise<void> {
+    this.errorMessage = '';
+    this.scraperResult = null;
+    if (!newValue) { // Clear the result if input is empty
+      return;
     }
+    if (!this.isValidUrl(newValue.trim())) {
+      this.errorMessage = 'Invalid URL';
+      return;
+    }
+
+    try {
+      this.scraperResult = await this._listingsService.scrapeListing(newValue);
+    } catch (error) {
+      console.error(error);
+      this.errorMessage = error.message;
+    }
+
   }
 
-  // Function to call the scraperService API
-  private async fetchProductDetails(url: string): Promise<any> {
-    try {
-      const selectors = ['[data-property-group]',
-        'div.case-facts__box-title__price',
-        '_img_.media-presentation__minified__left',
-        '_first_div.case-facts__box-inner-wrap'];
-      return this._scraperService.fetchProductDetails(url, selectors);
-    } catch (error) {
-      console.error('Error fetching scraperService data', error);
-      throw error;
-    }
+  private isValidUrl(url: string): boolean {
+    const regex = /^(http|https):\/\/([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
+    return regex.test(url);
   }
 }

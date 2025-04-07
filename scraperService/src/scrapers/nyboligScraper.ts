@@ -8,7 +8,7 @@ export class NyboligScraper implements IScraper {
     const selectors = [
       {type: 'string', selector: '[data-property-group]'} as Selector,
       {type: 'string', selector: 'div.case-facts__box-title__price'} as Selector,
-      {type: 'image', selector: 'media-presentation__minified__left'} as Selector,
+      {type: 'image', selector: '.media-presentation__minified__left'} as Selector,
       {type: 'firstInList', selector: '.case-facts__box-inner-wrap'} as Selector
     ];
 

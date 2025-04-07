@@ -2,22 +2,22 @@
 <mat-dialog-content>
     <mat-form-field>
         <mat-label>Input</mat-label>
-        <input matInput [(ngModel)]="inputUrl" (ngModelChange)="onInputChange()" placeholder="Enter URL">
+        <input matInput [(ngModel)]="inputUrl" (ngModelChange)="onInputChange($event)" placeholder="Enter URL">
     </mat-form-field>
 
     <!-- Display the result vertically -->
     <div *ngIf="scraperResult">
-        <div *ngIf="scraperResult.name">
-            <h3>{{ scraperResult.name }}</h3>
+        <div *ngIf="scraperResult.title">
+            <h3>{{ scraperResult.title }}</h3>
         </div>
-        <div *ngIf="scraperResult.price">
-            <strong>Price:</strong> {{ scraperResult.price }}
+        <div *ngIf="scraperResult.pricedkk">
+            <strong>Price:</strong> {{ scraperResult.pricedkk }}
         </div>
-        <div *ngIf="scraperResult.image">
-            <img [src]="scraperResult.image" alt="Product Image" style="max-width: 400px;">
+        <div *ngIf="scraperResult.imageurl">
+            <img [src]="scraperResult.imageurl" alt="Product Image" style="max-width: 400px;">
         </div>
-        <div *ngIf="scraperResult.additionalInfo">
-            {{ scraperResult.additionalInfo }}
+        <div *ngIf="scraperResult.description">
+            {{ scraperResult.description }}
         </div>
     </div>
 </mat-dialog-content>

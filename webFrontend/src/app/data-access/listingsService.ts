@@ -10,6 +10,12 @@ export class ListingsService extends BaseDataAccessService {
   protected _baseUrl: string = environment.backendUrl + '/listings/';
 
 
+  public async scrapeListing(url: string): Promise<ListingDto> {
+    const params = {
+      url: url,
+    }
+    return await this.get<ListingDto>(params, 'srapeListing');
+  }
   public async addListing(url: string): Promise<any> {
     const params = {
       url: url,
@@ -19,7 +25,7 @@ export class ListingsService extends BaseDataAccessService {
     await this.post(params, 'addListing');
   }
 
-  public async getListings(): Promise<any> {
+  public async getListings(): Promise<ListingDto[]> {
     const params = {
       userID: null
     }

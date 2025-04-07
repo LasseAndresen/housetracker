@@ -62,6 +62,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+      - SCRAPER_SERVICE_URL=${SCRAPER_SERVICE_URL}
     command: npm run start:dev
     develop:
       watch:

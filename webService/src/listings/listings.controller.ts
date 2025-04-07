@@ -11,8 +11,9 @@ export class ListingsController {
   async scrapeListing(@Req() request: Request, @Res() response: Response): Promise<void> {
     await endpointWrapper(async () => {
       const url = request.query.url;
-      const listings = await this._listingsService.scrapeListing(url);
-      response.send(listings);
+      console.log('Scraping: ' + url);
+      const listing = await this._listingsService.scrapeListing(url);
+      return listing;
     }, response);
   }
 

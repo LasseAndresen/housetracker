@@ -3,6 +3,7 @@ import {BaseDataAccessService} from "./baseDataAccessService";
 import {Injectable} from "@nestjs/common";
 import {HttpService} from "@nestjs/axios";
 import {ConfigService} from "@nestjs/config";
+import {ListingDto} from "@lasseandresen/shared-dtos";
 
 @Injectable({
 })
@@ -20,5 +21,13 @@ export class ScraperService extends BaseDataAccessService {
     }
 
     return await this.get(params, '/scrape');
+  }
+
+  public async scrapeListing(url: string): Promise<ListingDto> {
+    const params = {
+      url: url
+    }
+
+    return this.get<ListingDto>(params, '/scrapeListing');
   }
 }

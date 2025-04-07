@@ -18,7 +18,7 @@ export class ListingsCache {
 
     // Add to listings if missing
     if (!this._listingsByUrl[url]) {
-      const scrapeResult: ListingDto = await this._scraperService.fetchProductDetails(url, []);
+      const scrapeResult: ListingDto = await this._scraperService.scrapeListing(url);
       this._listingsByUrl[url] = {
         listing: scrapeResult,
         timestamp: Date.now()
