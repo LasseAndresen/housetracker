@@ -16,6 +16,9 @@ app.get('/scrapeListing', async (req: Request, res: Response): Promise<void> => 
     }
 
     const scraper = getScraperFromUrl(url);
+    if (!scraper) {
+        res.status(400).json({ error: "Scraper not found" });
+    }
     const result = await scraper.scrapeListing(url);
     res.json(result);
 });

@@ -11,6 +11,7 @@ import {MatInput} from "@angular/material/input";
 import {ListingsService} from "../data-access/listingsService";
 import {ScraperService} from "../data-access/scraperService";
 import {ListingDto} from "@lasseandresen/shared-dtos";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-addListing-dialog',
@@ -25,7 +26,8 @@ import {ListingDto} from "@lasseandresen/shared-dtos";
     MatButton,
     MatLabel,
     MatInput,
-    MatDialogTitle
+    MatDialogTitle,
+    MatProgressSpinner
   ],
   standalone: true
 })
@@ -33,6 +35,7 @@ export class AddListingDialogComponent {
   public inputUrl: string = '';
   public scraperResult: ListingDto = null;
   public errorMessage: string = '';
+  public isLoading: boolean = false;
 
   // Injecting HttpClient to make API calls
   constructor(
@@ -65,12 +68,14 @@ export class AddListingDialogComponent {
     }
 
     try {
+      this.isLoading = true;
       this.scraperResult = await this._listingsService.scrapeListing(newValue);
     } catch (error) {
       console.error(error);
-      this.errorMessage = error.message;
+      this.errorMessage = 'Unsupported URL';
+    } finally {
+      this.isLoading = false;
     }
-
   }
 
   private isValidUrl(url: string): boolean {

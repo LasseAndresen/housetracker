@@ -5,6 +5,6 @@ export async function endpointWrapper(func: () => any, res: Response) {
     res.status(200).send(result);
   } catch (err) {
     console.error("Error during endpoint execution:", err);
-    res.status(500).send("Something went wrong");
+    res.status(err.status || 500).send({ error: err.message });
   }
 }

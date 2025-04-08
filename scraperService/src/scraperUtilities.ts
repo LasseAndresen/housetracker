@@ -8,7 +8,7 @@ export function getScraperFromUrl(url: string): IScraper {
   if (url.includes('nybolig.dk')) {
     return new NyboligScraper();
   }
-  throw new Error('Invalid or unsupported url: ' + url);
+  return null;
 }
 
 export async function scrapeWebsite(url, selectors: Selector[], verbose = false): Promise<string[]> {

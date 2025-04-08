@@ -1,9 +1,22 @@
 <h2 mat-dialog-title>Add Listing</h2>
+<!-- Loading Overlay -->
+<div class="loading-overlay" *ngIf="isLoading">
+    <mat-progress-spinner
+            mode="indeterminate"
+            diameter="50"
+            color="primary"
+    ></mat-progress-spinner>
+</div>
 <mat-dialog-content>
     <mat-form-field>
         <mat-label>Input</mat-label>
         <input matInput [(ngModel)]="inputUrl" (ngModelChange)="onInputChange($event)" placeholder="Enter URL">
     </mat-form-field>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
 
     <!-- Display the result vertically -->
     <div *ngIf="scraperResult">

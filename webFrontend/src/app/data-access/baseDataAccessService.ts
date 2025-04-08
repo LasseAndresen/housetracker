@@ -30,7 +30,7 @@ export abstract class BaseDataAccessService {
       return result as T;
     } catch (error) {
       console.error('GET request failed:', error);
-      return null;
+      throw error;
     }
   }
 }

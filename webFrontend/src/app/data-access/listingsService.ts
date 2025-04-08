@@ -14,9 +14,9 @@ export class ListingsService extends BaseDataAccessService {
     const params = {
       url: url,
     }
-    return await this.get<ListingDto>(params, 'srapeListing');
+    return this.get<ListingDto>(params, 'srapeListing');
   }
-  public async addListing(url: string): Promise<any> {
+  public async addListing(url: string): Promise<void> {
     const params = {
       url: url,
       userID: null
