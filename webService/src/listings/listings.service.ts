@@ -3,6 +3,7 @@ import {DataSource} from "typeorm";
 import {Listing} from "../entity/entities";
 import {ListingDto} from "@lasseandresen/shared-dtos";
 import {ListingsCache} from "./listings.cache";
+import {EntityUtilities} from "../utilities/entityUtilities";
 
 @Injectable()
 export class ListingsService {
@@ -22,15 +23,7 @@ export class ListingsService {
       console.log('Listing did not exist. Adding it.');
       // Add Listing
       const listing = await this._listingsCache.getListing(url);
-      const newListing = new Listing();
-      newListing.url = url;
-      newListing.externalid = 'test';
-      newListing.title = listing.title;
-      newListing.description = listing.description;
-      newListing.pricedkk = listing.pricedkk;
-      newListing.imageurl = listing.imageurl;
-      newListing.location = listing.location;
-      newListing.available = listing.available;
+      const newListing = EntityUtilities.ListingDtoToEntity(listing);
       newListing.dateadded = new Date();
       await newListing.save();
     } else {
@@ -45,6 +38,11 @@ export class ListingsService {
   }
 
   public async getListings(): Promise<ListingDto[]> {
-    return [];
+    const allListings = await this._dataSource
+      .getRepository(Listing)
+      .createQueryBuilder("listing")
+      .getMany();
+    console.log('Found listings ', allListings);
+    return allListings.map(l => EntityUtilities.ListingEntityToDto(l));
   }
 }

@@ -29,7 +29,6 @@ export class ListingsService extends BaseDataAccessService {
     const params = {
       userID: null
     }
-    const response = await this.get<ListingDto[]>(params, 'getListings');
-    return response;
+    return this.get<ListingDto[]>(params, 'getListings');
   }
 }

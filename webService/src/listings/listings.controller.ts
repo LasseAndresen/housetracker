@@ -2,18 +2,18 @@ import {Controller, Get, Post, Req, Res} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {ListingsService} from "./listings.service";
 import {endpointWrapper} from "../utilities/endpointUtilities";
+import {ListingDto} from "@lasseandresen/shared-dtos";
 
 @Controller('listings')
 export class ListingsController {
 
   constructor(private _listingsService: ListingsService) {}
   @Get('srapeListing')
-  async scrapeListing(@Req() request: Request, @Res() response: Response): Promise<void> {
+  async scrapeListing(@Req() request: Request, @Res() response: Response): Promise<ListingDto> {
     await endpointWrapper(async () => {
-      const url = request.query.url;
+      const url = request.query.url as string;
       console.log('Scraping: ' + url);
-      const listing = await this._listingsService.scrapeListing(url);
-      return listing;
+      return this._listingsService.scrapeListing(url);
     }, response);
   }
 
@@ -26,10 +26,9 @@ export class ListingsController {
   }
 
   @Get('getListings')
-  async getListings(@Req() request: Request, @Res() response: Response): Promise<void> {
+  async getListings(@Req() request: Request, @Res() response: Response): Promise<ListingDto> {
     await endpointWrapper(async () => {
-      const listings = await this._listingsService.getListings();
-      response.send(listings);
+      return this._listingsService.getListings();
     }, response);
   }
 }

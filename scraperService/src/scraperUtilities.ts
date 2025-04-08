@@ -11,8 +11,8 @@ export function getScraperFromUrl(url: string): IScraper {
   throw new Error('Invalid or unsupported url: ' + url);
 }
 
-export async function scrapeWebsite(url, selectors: Selector[], verbose = false) {
-  const result = [];
+export async function scrapeWebsite(url, selectors: Selector[], verbose = false): Promise<string[]> {
+  const result: string[] = [];
   const browser = await puppeteer.launch();
   try {
     const page = await browser.newPage();
@@ -38,7 +38,7 @@ export async function scrapeWebsite(url, selectors: Selector[], verbose = false)
         continue;
       }
       
-      let text;
+      let text: string;
       if (selector.type === 'image') {
         const img = $(selector.selector).find('img').attr('src');
         text = img;
@@ -47,7 +47,7 @@ export async function scrapeWebsite(url, selectors: Selector[], verbose = false)
         if (elements.length > 0) {
           text = elements.first().text();
         } else {
-          text = text.text();
+          text = elements.text();
         }
       } else {
         text = $(selector.selector).text();
