@@ -6,19 +6,7 @@
         <div style="height: 100%; width: 100%; padding: 12px">
             <h3>Tracked listings</h3>
             <section class="horizontal-container">
-                <mat-card appearance="outlined" style="max-width: 400%; margin: 8px">
-                    <mat-card-header>
-                        <mat-card-title>Nice looking house</mat-card-title>
-                        <mat-card-subtitle>Insert good address</mat-card-subtitle>
-                    </mat-card-header>
-                    <img mat-card-image src="https://images.boligsiden.dk/images/case/1b4ee7c9-d501-4d1e-84c7-de255405ce71/330x220/e0dd7691-db4a-41d7-9faa-f2ba3613bd12.webp?w=550&quality=80">
-                    <mat-card-content>
-                        Costs only 4½ kidneys
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-button>Open</button>
-                    </mat-card-actions>
-                </mat-card>
+                <listing-list [listings]="listings"></listing-list>
             </section>
             <button mat-button style=""
                     (click)="openNewListingDialog()">

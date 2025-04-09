@@ -1,0 +1,24 @@
+<div class="carousel-wrapper">
+    <button mat-icon-button (click)="scrollLeftBtn()" class="nav-button left">
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <div
+            class="carousel"
+            [ngClass]="{'.carousel-snapping': !isDown}"
+            #carousel
+            (mousedown)="onMouseDown($event)"
+            (mouseleave)="onMouseLeave()"
+            (mouseup)="onMouseUp()"
+            (mousemove)="onMouseMove($event)"
+    >
+        <listing-card
+                *ngFor="let listing of listings"
+                [listing]="listing">
+        </listing-card>
+    </div>
+
+    <button mat-icon-button (click)="scrollRightBtn()" class="nav-button right">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+</div>

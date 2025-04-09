@@ -1,0 +1,22 @@
+<mat-card class="listing-card mat-elevation-z3">
+  <img mat-card-image [src]="listing.imageurl" alt="Listing image" draggable="false" />
+
+  <div *ngIf="isNewPrice" class="label-row">
+    <span></span>
+    <span class="new-label" >New price</span>
+  </div>
+
+  <mat-card-title class="title">{{ listing.title }}</mat-card-title>
+
+  <mat-card-content class="details">
+    <div class="info-row">
+      <span class="price">{{ listing.pricedkk }}</span>
+      <span class="meta" > {{ listing.description }}</span>
+<!--      <span class="meta"> &nbsp;&bull;&nbsp; {{ size }} &nbsp;&bull;&nbsp; {{ rooms }} rum</span>-->
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button color="primary" (click)="openListingClicked()">Se mere</button>
+  </mat-card-actions>
+</mat-card>
