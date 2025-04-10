@@ -25,6 +25,14 @@ export class ListingsController {
     }, response);
   }
 
+  @Post('deleteListing')
+  async deleteListing(@Req() request: Request, @Res() response: Response): Promise<void> {
+    await endpointWrapper(async () => {
+      const { url } = request.body;
+      await this._listingsService.deleteListing(url);
+    }, response);
+  }
+
   @Get('getListings')
   async getListings(@Req() request: Request, @Res() response: Response): Promise<ListingDto> {
     await endpointWrapper(async () => {

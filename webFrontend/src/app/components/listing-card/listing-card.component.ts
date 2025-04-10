@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {CommonModule} from "@angular/common";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import type {ListingDto} from "@lasseandresen/shared-dtos";
+import {ListingsService} from "../../data-access/listingsService";
 
 @Component({
   selector: 'listing-card',
@@ -17,17 +18,27 @@ import type {ListingDto} from "@lasseandresen/shared-dtos";
     MatCardActions,
     MatIcon,
     MatButton,
-    MatCardImage
+    MatCardImage,
+    MatMiniFabButton
   ],
   standalone: true
 })
 export class ListingCardComponent {
+  public showDeleteButton = false;
+
   @Input()
-  listing: ListingDto;
+  public listing: ListingDto;
   @Input()
-  isNewPrice = false;
+  public isNewPrice = false;
+
+  constructor(private _listingService: ListingsService) {
+  }
 
   public openListingClicked() {
     window.open(this.listing.url, '_blank');
+  }
+
+  public async deleteListing() {
+    await this._listingService.deleteListing(this.listing.url);
   }
 }

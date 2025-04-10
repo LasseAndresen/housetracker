@@ -3,15 +3,13 @@
         <mat-icon>chevron_left</mat-icon>
     </button>
 
-    <div
-            class="carousel"
-            [ngClass]="{'.carousel-snapping': !isDown}"
-            #carousel
-            (mousedown)="onMouseDown($event)"
-            (mouseleave)="onMouseLeave()"
-            (mouseup)="onMouseUp()"
-            (mousemove)="onMouseMove($event)"
-    >
+    <div class="carousel"
+        [ngClass]="{'.carousel-snapping': !isDown}"
+        #carousel
+        (mousedown)="onMouseDown($event)"
+        (mouseleave)="onMouseLeave()"
+        (mouseup)="onMouseUp()"
+        (mousemove)="onMouseMove($event)">
         <listing-card
                 *ngFor="let listing of listings"
                 [listing]="listing">

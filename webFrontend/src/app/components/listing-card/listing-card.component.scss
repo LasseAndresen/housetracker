@@ -53,3 +53,15 @@
     padding: 0 8px 8px;
   }
 }
+
+.delete-floating-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.listing-card:hover .delete-floating-button {
+  opacity: 1;
+}

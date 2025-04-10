@@ -25,6 +25,13 @@ export class ListingsService extends BaseDataAccessService {
     await this.post(params, 'addListing');
   }
 
+  public async deleteListing(url: string): Promise<void> {
+    const params = {
+      url: url
+    }
+    await this.post(params, 'deleteListing');
+  }
+
   public async getListings(): Promise<ListingDto[]> {
     const params = {
       userID: null

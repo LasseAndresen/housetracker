@@ -33,6 +33,10 @@ export class ListingsService {
     // Add UserListing link
   }
 
+  public async deleteListing(url: string) {
+    // Delete UserListing link
+  }
+
   public async scrapeListing(url: string): Promise<ListingDto> {
     return this._listingsCache.getListing(url);
   }
