@@ -19,7 +19,7 @@ export class NyboligScraper implements IScraper {
       scrapeResult.then((result) => {
         const listing = {
           title: result[0].trim(),
-          pricedkk: parseInt(result[1]),
+          pricedkk: result[1],
           imageurl: result[2],
           description: result[3]?.trim() ?? '',
           url: url,

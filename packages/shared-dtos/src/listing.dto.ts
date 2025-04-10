@@ -6,5 +6,5 @@ export interface ListingDto {
   location: string;
   available: boolean;
   dateadded: Date;
-  pricedkk: number;
+  pricedkk: string;
 }

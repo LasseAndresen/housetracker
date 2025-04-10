@@ -26,8 +26,8 @@ export class Listing extends BaseEntity {
   @Column("text", { name: "description" })
   description: string;
 
-  @Column("integer", { name: "pricedkk" })
-  pricedkk: number;
+  @Column("text", { name: "pricedkk" })
+  pricedkk: string;
 
   @Column("text", { name: "imageurl" })
   imageurl: string;
