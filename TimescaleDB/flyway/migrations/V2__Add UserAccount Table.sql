@@ -1,8 +1,10 @@
 create table UserAccount (
     ID SERIAL PRIMARY KEY,
-    Name TEXT NOT NULL,
+    FirstName TEXT NULL,
+    LastName TEXT NULL,
     Email TEXT UNIQUE NOT NULL,
-    PasswordEncrypted TEXT NOT NULL,
+    Picture TEXT NULL,
+    GoogleID TEXT NULL,
     DateAdded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     LastLogin TIMESTAMP DEFAULT NULL,
     IsActive BOOLEAN DEFAULT TRUE,

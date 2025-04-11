@@ -15,14 +15,20 @@ export class Useraccount extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("text", { name: "name" })
-  name: string;
+  @Column("text", { name: "firstname", nullable: true })
+  firstName: string;
+
+  @Column("text", { name: "lastname", nullable: true })
+  lastName: string;
 
   @Column("text", { name: "email", unique: true })
   email: string;
 
-  @Column("text", { name: "passwordencrypted" })
-  passwordencrypted: string;
+  @Column({ name: "picture", nullable: true })
+  picture: string;
+
+  @Column({ name: "googleid", nullable: true })
+  googleID: string;
 
   @Column("timestamp without time zone", {
     name: "dateadded",

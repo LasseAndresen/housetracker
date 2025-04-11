@@ -10,10 +10,12 @@ import {Listing, Useraccount, Useraccountlistingslink} from "./entity/entities";
 import {ListingsCache} from "./listings/listings.cache";
 import {HttpModule} from "@nestjs/axios";
 import {ScraperService} from "./data-access/scraperService";
+import {AuthModule} from "./auth/auth.module";
 
 @Module({
   imports: [
     HttpModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
