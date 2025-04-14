@@ -1,5 +1,5 @@
 // src/auth/auth.controller.ts
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
@@ -12,8 +12,11 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
-  googleAuth() {
-    console.log('Google auth called');
+  googleAuth(@Query('rememberMe') rememberMe: string, @Req() req) {
+    // Store rememberMe preference in the session
+    if (req.session) {
+      req.session.rememberMe = rememberMe === 'true';
+    }
     // This route initiates Google OAuth flow
   }
 
@@ -23,18 +26,19 @@ export class AuthController {
     // User has been authenticated
     const user = req.user;
 
-    // Generate JWT token
-    const token = this.authService.generateToken(user);
+    // Get rememberMe preference from session
+    const rememberMe = req.session?.rememberMe === true;
+
+    // Generate JWT token with appropriate expiration
+    const token = this.authService.generateToken(user, rememberMe);
 
     // Redirect to the frontend with the token
-    console.log('Redirecting to frontend ', token);
     res.redirect(`http://localhost:4200/auth/callback?token=${token}`);
   }
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   getProfile(@Req() req) {
-    console.log('Returning profile ', req.user);
     return req.user;
   }
 }

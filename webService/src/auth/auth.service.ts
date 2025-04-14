@@ -1,6 +1,7 @@
 // src/auth/auth.service.ts
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {Useraccount} from "../entity/entities";
@@ -11,6 +12,7 @@ export class AuthService {
     @InjectRepository(Useraccount)
     private usersRepository: Repository<Useraccount>,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   async findOrCreateUser(userDetails: any): Promise<Useraccount> {
@@ -34,12 +36,17 @@ export class AuthService {
     return user;
   }
 
-  generateToken(user: Useraccount): string {
+  generateToken(user: Useraccount, rememberMe: boolean = false): string {
     const payload = {
       sub: user.id,
       email: user.email,
     };
 
-    return this.jwtService.sign(payload);
+    // Use different expiration times based on rememberMe preference
+    const expiresIn = rememberMe
+      ? this.configService.get<string>('JWT_EXPIRATION_LONG', '30d') // 30 days for remember me
+      : this.configService.get<string>('JWT_EXPIRATION', '1h');      // 1 hour for session only
+
+    return this.jwtService.sign(payload, { expiresIn });
   }
 }

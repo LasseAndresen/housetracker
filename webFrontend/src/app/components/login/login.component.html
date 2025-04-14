@@ -1,0 +1,18 @@
+<div class="login-container">
+  <div class="loading-overlay" *ngIf="(initializationService.initialized | async) === false">
+    <mat-progress-spinner
+            mode="indeterminate"
+            diameter="30"
+            color="primary"
+    ></mat-progress-spinner>
+  </div>
+  <h2>Login</h2>
+  <div class="remember-me">
+    <input type="checkbox" id="rememberMe" [(ngModel)]="rememberMe">
+    <label for="rememberMe">Remember me</label>
+  </div>
+  <button (click)="loginWithGoogle()" class="google-btn">
+    <img src="https://www.svgrepo.com/show/303108/google-icon-logo.svg" alt="Google logo">
+    Sign in with Google
+  </button>
+</div>
