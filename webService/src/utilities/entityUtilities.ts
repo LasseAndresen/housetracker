@@ -1,9 +1,9 @@
-import {Listing} from "../entity/entities";
+import {Listing, Useraccountlistingslink} from "../entity/entities";
 import {ListingDto} from "@lasseandresen/shared-dtos";
 
 export class EntityUtilities {
 
-  public static ListingEntityToDto(listing: Listing): ListingDto {
+  public static ListingEntityToDto(listing: Listing, listingLink: Useraccountlistingslink): ListingDto {
     return {
       url: listing.url,
       title: listing.title,

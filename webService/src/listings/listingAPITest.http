@@ -1,5 +1,6 @@
 ### Add Listing Example Request
-POST http://localhost:3000/listings/addListing
+POST http://localhost:3000/listings/addListing \
+-H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
 Content-Type: application/json
 
 {
