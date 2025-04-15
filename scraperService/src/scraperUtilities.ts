@@ -3,11 +3,16 @@ import puppeteer from 'puppeteer';
 import {Selector} from "./models/selector";
 import {IScraper} from "./scrapers/iScraper";
 import {NyboligScraper} from "./scrapers/nyboligScraper";
+import {DanboligScraper} from "./scrapers/danboligScraper";
 
 export function getScraperFromUrl(url: string): IScraper {
   if (url.includes('nybolig.dk')) {
     return new NyboligScraper();
   }
+  if (url.includes('danbolig.dk')) {
+    return new DanboligScraper();
+  }
+
   return null;
 }
 

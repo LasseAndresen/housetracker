@@ -3,13 +3,14 @@ import {scrapeWebsite} from "../scraperUtilities";
 import {Selector} from "../models/selector";
 import {ListingDto} from "@lasseandresen/shared-dtos";
 
-export class NyboligScraper implements IScraper {
+export class DanboligScraper implements IScraper {
   public async scrapeListing(url: string): Promise<ListingDto> {
     const selectors = [
-      {type: 'string', selector: '[data-property-group]'} as Selector, // Title
-      {type: 'string', selector: 'div.case-facts__box-title__price'} as Selector, // Price
-      {type: 'image', selector: '.media-presentation__minified__left'} as Selector, // Image
-      {type: 'firstInList', selector: '.case-facts__box-inner-wrap'} as Selector // Description
+      {type: 'string', selector: '.o-propertyFacts__address'} as Selector, // Title
+      {type: 'string', selector: 'ul.o-propertyFacts__facts li:nth-child(1) span:nth-child(1)'} as Selector, // Price
+      {type: 'string', selector: 'ul.o-propertyFacts__facts li:nth-child(1) span:nth-child(2)'} as Selector, // Area
+      {type: 'string', selector: 'ul.o-propertyFacts__facts li:nth-child(1) span:nth-child(3)'} as Selector, // Rooms
+      {type: 'image', selector: 'div.o-propertyHeroImageGrid div:nth-child(1)'} as Selector, // Image
     ];
 
     const scrapeResult = scrapeWebsite(url, selectors);
@@ -17,11 +18,12 @@ export class NyboligScraper implements IScraper {
     // TODO: format result
     return new Promise<ListingDto>((resolve, reject) => {
       scrapeResult.then((result) => {
+        const description = result[2] + ' - ' + result[3];
         const listing = {
           title: result[0].trim(),
           pricedkk: result[1],
-          imageurl: result[2],
-          description: result[3]?.trim() ?? '',
+          imageurl: result[4],
+          description: description,
           url: url,
           dateadded: new Date(),
           location: 'Copenhagen',
