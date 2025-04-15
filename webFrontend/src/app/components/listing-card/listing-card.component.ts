@@ -5,6 +5,7 @@ import {CommonModule} from "@angular/common";
 import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import type {ListingDto} from "@lasseandresen/shared-dtos";
 import {ListingsService} from "../../data-access/listingsService";
+import {AddressExtractorPipe} from "./address-extractor.pipe";
 
 @Component({
   selector: 'listing-card',
@@ -19,7 +20,8 @@ import {ListingsService} from "../../data-access/listingsService";
     MatIcon,
     MatButton,
     MatCardImage,
-    MatMiniFabButton
+    MatMiniFabButton,
+    AddressExtractorPipe
   ],
   standalone: true
 })

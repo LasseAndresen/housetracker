@@ -8,11 +8,12 @@
     <span class="new-label">New price</span>
   </div>
 
-  <mat-card-title class="title">{{ listing.title }}</mat-card-title>
+  <mat-card-title class="title">{{ listing.title | addressExtractor: true }}</mat-card-title>
+  <mat-card-title class="title2">{{ listing.title | addressExtractor: false }}</mat-card-title>
 
   <mat-card-content class="details">
     <div class="info-row">
-      <span class="price">{{ listing.pricedkk }} kr.</span>
+      <span class="price">{{ listing.pricedkk }} {{listing.pricedkk.includes('kr') ? '' : 'kr.'}}</span>
       <span class="meta">{{ listing.description }}</span>
     </div>
   </mat-card-content>
