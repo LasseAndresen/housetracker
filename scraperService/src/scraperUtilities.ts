@@ -4,6 +4,7 @@ import {Selector} from "./models/selector";
 import {IScraper} from "./scrapers/iScraper";
 import {NyboligScraper} from "./scrapers/nyboligScraper";
 import {DanboligScraper} from "./scrapers/danboligScraper";
+import {HomeScraper} from "./scrapers/HomeScraper";
 
 export function getScraperFromUrl(url: string): IScraper {
   if (url.includes('nybolig.dk')) {
@@ -11,6 +12,9 @@ export function getScraperFromUrl(url: string): IScraper {
   }
   if (url.includes('danbolig.dk')) {
     return new DanboligScraper();
+  }
+  if (url.includes('home.dk')) {
+    return new HomeScraper();
   }
 
   return null;

@@ -11,3 +11,6 @@ GET http://localhost:3002/scrapeListing?url=https://www.nybolig.dk/raekkehus/340
 
 ### Danbolig scraper test
 GET http://localhost:3002/scrapeListing?url=https://danbolig.dk/bolig/gladsaxe/2880/raekkehus/1840000592-184/
+
+### Home scraper test
+GET http://localhost:3002/scrapeListing?url=https://home.dk/salg/huse-villaer/stavnsbjerg-alle-56-2860-soeborg/sag-1010002519/

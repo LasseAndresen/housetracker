@@ -17,11 +17,15 @@ export class NyboligScraper implements IScraper {
     // TODO: format result
     return new Promise<ListingDto>((resolve, reject) => {
       scrapeResult.then((result) => {
+        const title = result[0].trim();
+        const price = result[1].split(' ')[0];
+        const description = result[3]?.trim() ?? '';
+        const imageUrl = result[2];
         const listing = {
-          title: result[0].trim(),
-          pricedkk: result[1],
-          imageurl: result[2],
-          description: result[3]?.trim() ?? '',
+          title: title,
+          pricedkk: price,
+          imageurl: imageUrl,
+          description: description,
           url: url,
           dateadded: new Date(),
           location: 'Copenhagen',

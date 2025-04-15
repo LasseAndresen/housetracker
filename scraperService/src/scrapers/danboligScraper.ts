@@ -18,11 +18,14 @@ export class DanboligScraper implements IScraper {
     // TODO: format result
     return new Promise<ListingDto>((resolve, reject) => {
       scrapeResult.then((result) => {
+        const title = result[0].trim();
+        const price = result[1];
         const description = result[2] + ' - ' + result[3];
+        const imageUrl = result[4];
         const listing = {
-          title: result[0].trim(),
-          pricedkk: result[1],
-          imageurl: result[4],
+          title: title,
+          pricedkk: price,
+          imageurl: imageUrl,
           description: description,
           url: url,
           dateadded: new Date(),
