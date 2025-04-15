@@ -14,3 +14,6 @@ GET http://localhost:3002/scrapeListing?url=https://danbolig.dk/bolig/gladsaxe/2
 
 ### Home scraper test
 GET http://localhost:3002/scrapeListing?url=https://home.dk/salg/huse-villaer/stavnsbjerg-alle-56-2860-soeborg/sag-1010002519/
+
+### EDC scraper test
+GET http://localhost:3002/scrapeListing?url=https://www.edc.dk/alle-boliger/villa/2840-holte/nordre-paradisvej-14/29105854/

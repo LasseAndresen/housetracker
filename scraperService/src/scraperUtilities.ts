@@ -4,7 +4,8 @@ import {Selector} from "./models/selector";
 import {IScraper} from "./scrapers/iScraper";
 import {NyboligScraper} from "./scrapers/nyboligScraper";
 import {DanboligScraper} from "./scrapers/danboligScraper";
-import {HomeScraper} from "./scrapers/HomeScraper";
+import {HomeScraper} from "./scrapers/homeScraper";
+import {EdcScraper} from "./scrapers/edcScraper";
 
 export function getScraperFromUrl(url: string): IScraper {
   if (url.includes('nybolig.dk')) {
@@ -15,6 +16,10 @@ export function getScraperFromUrl(url: string): IScraper {
   }
   if (url.includes('home.dk')) {
     return new HomeScraper();
+  }
+  if (url.includes('edc.dk')) {
+    throw new Error('EDC unfortunately cannot be scraped. Please use another website');
+    return new EdcScraper();
   }
 
   return null;
@@ -58,7 +63,10 @@ export async function scrapeWebsite(url, selectors: Selector[], verbose = false)
         } else {
           text = elements.text();
         }
-      } else {
+      } else if (selector.type === 'custom') {
+        text = selector.customSelector($);
+      }
+      else {
         text = $(selector.selector).text();
       }
       
