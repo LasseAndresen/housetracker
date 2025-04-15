@@ -35,6 +35,7 @@ export class ListingsService {
     const newLink = new Useraccountlistingslink();
     newLink.useraccountid = userID;
     newLink.listingid = listingEntity.id;
+    newLink.originalpricedkk = listingEntity.pricedkk;
     await newLink.save();
   }
 

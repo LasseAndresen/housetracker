@@ -13,6 +13,9 @@ export class Useraccountlistingslink extends BaseEntity {
   @Column("integer", { primary: true, name: "listingid" })
   listingid: number;
 
+  @Column("text", { name: "originalpricedkk"})
+  originalpricedkk: string;
+
   @Column("timestamp without time zone", {
     name: "dateadded",
     nullable: true,

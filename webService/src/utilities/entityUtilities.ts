@@ -13,6 +13,7 @@ export class EntityUtilities {
       available: listing.available,
       dateadded: listing.dateadded ?? new Date(0), // fallback if null
       pricedkk: listing.pricedkk,
+      originalpricedkk: listingLink.originalpricedkk
     }
   }
 

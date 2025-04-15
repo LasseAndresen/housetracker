@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@lasseandresen/shared-dtos": "^1.0.0",
+    "@lasseandresen/shared-dtos": "^1.1.1",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",

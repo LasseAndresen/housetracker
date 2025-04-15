@@ -7,4 +7,5 @@ export interface ListingDto {
   available: boolean;
   dateadded: Date;
   pricedkk: string;
+  originalpricedkk?: string;
 }
