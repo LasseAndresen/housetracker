@@ -9,7 +9,7 @@ export class NyboligScraper implements IScraper {
       {type: 'string', selector: '[data-property-group]'} as Selector, // Title
       {type: 'string', selector: 'div.case-facts__box-title__price'} as Selector, // Price
       {type: 'image', selector: '.media-presentation__minified__left'} as Selector, // Image
-      {type: 'firstInList', selector: '.case-facts__box-inner-wrap'} as Selector // Description
+      {type: 'stringFirst', selector: '.case-facts__box-inner-wrap'} as Selector // Description
     ];
 
     const scrapeResult = scrapeWebsite(url, selectors);

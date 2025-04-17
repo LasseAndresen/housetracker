@@ -6,6 +6,7 @@ import {NyboligScraper} from "./scrapers/nyboligScraper";
 import {DanboligScraper} from "./scrapers/danboligScraper";
 import {HomeScraper} from "./scrapers/homeScraper";
 import {EdcScraper} from "./scrapers/edcScraper";
+import {BoligsidenScraper} from "./scrapers/boligsidenScraper";
 
 export function getScraperFromUrl(url: string): IScraper {
   if (url.includes('nybolig.dk')) {
@@ -18,8 +19,11 @@ export function getScraperFromUrl(url: string): IScraper {
     return new HomeScraper();
   }
   if (url.includes('edc.dk')) {
-    throw new Error('EDC unfortunately cannot be scraped. Please use another website');
+    throw new Error('EDC unfortunately cannot be scraped. Please use another website.');
     return new EdcScraper();
+  }
+  if (url.includes('boligsiden.dk')) {
+    return new BoligsidenScraper();
   }
 
   return null;
@@ -56,7 +60,7 @@ export async function scrapeWebsite(url, selectors: Selector[], verbose = false)
       if (selector.type === 'image') {
         const img = $(selector.selector).find('img').attr('src');
         text = img;
-      } else if (selector.type === 'firstInList') {
+      } else if (selector.type === 'stringFirst') {
         const elements = $(selector.selector);
         if (elements.length > 0) {
           text = elements.first().text();
@@ -88,7 +92,7 @@ export function getSelectorsFromStrings(selectors: string[]): Selector[] {
     if (selector.includes('_img_')) {
       result.push({type: 'image', selector: selector.substring(5)});
     } else if (selector.includes('_first_div')) {
-      result.push({type: 'firstInList', selector: selector.substring(7)});
+      result.push({type: 'stringFirst', selector: selector.substring(7)});
     } else {
       result.push({type: 'string', selector: selector});
     }
