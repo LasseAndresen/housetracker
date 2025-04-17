@@ -70,6 +70,14 @@ export class ListingsService {
       .innerJoinAndSelect("listing.useraccountlistingslinks", "links", "links.useraccountid = :userID", { userID })
       .getMany();
     console.log('Found listings ', userListings);
-    return userListings.map(l => EntityUtilities.ListingEntityToDto(l, l.useraccountlistingslinks[0])); // There should only be 1 link since we filtered for userID
+    const listings = userListings.map((listing) => EntityUtilities.ListingEntityToDto(listing, listing.useraccountlistingslinks[0]));
+    this.fillCurrentPrices(listings);
+    return listings;
+  }
+
+  private async fillCurrentPrices(listings: ListingDto[]): Promise<void> {
+    for (const listing of listings) {
+      listing.pricedkk = (await this._listingsCache.getListing(listing.url)).pricedkk;
+    }
   }
 }

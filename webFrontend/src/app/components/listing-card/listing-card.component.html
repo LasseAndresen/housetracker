@@ -1,20 +1,33 @@
 <mat-card class="listing-card mat-elevation-z3"
           (mouseenter)="showDeleteButton = true"
           (mouseleave)="showDeleteButton = false">
-  <img mat-card-image [src]="listing.imageurl" alt="Listing image" draggable="false" />
+  <img mat-card-image [src]="listing().imageurl" alt="Listing image" draggable="false" />
 
-  <div *ngIf="isNewPrice" class="label-row">
+  <div *ngIf="isNewPrice()" class="label-row">
     <span></span>
     <span class="new-label">New price</span>
   </div>
 
-  <mat-card-title class="title">{{ listing.title | addressExtractor: true }}</mat-card-title>
-  <mat-card-title class="title2">{{ listing.title | addressExtractor: false }}</mat-card-title>
+  <mat-card-title class="title">{{ listing().title | addressExtractor: true }}</mat-card-title>
+  <mat-card-title class="title2">{{ listing().title | addressExtractor: false }}</mat-card-title>
 
   <mat-card-content class="details">
     <div class="info-row">
-      <span class="price">{{ listing.pricedkk }} {{listing.pricedkk.includes('kr') ? '' : 'kr.'}}</span>
-      <span class="meta">{{ listing.description }}</span>
+      <span class="price">{{ currentPrice() }} {{currentPrice().includes('kr') ? '' : 'kr.'}}</span>
+
+      <ng-container *ngIf="originalPrice() && originalPriceNumber() > currentPriceNumber()">
+        <mat-icon
+                class="price-drop-icon"
+                color="mat-green-500"
+                matTooltip="Price reduced from {{ originalPrice() }} kr. to {{ currentPrice() }} kr.">
+          arrow_downward
+        </mat-icon>
+        <span class="price-drop-percentage">
+          -{{ getPriceDropPercentage(originalPriceNumber(), currentPriceNumber()) }}%
+        </span>
+      </ng-container>
+
+      <span class="meta">{{ listing().description }}</span>
     </div>
   </mat-card-content>
 

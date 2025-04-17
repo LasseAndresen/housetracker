@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, computed, EventEmitter, input, Input, output, Output, signal} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {CommonModule} from "@angular/common";
@@ -6,6 +6,8 @@ import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import type {ListingDto} from "@lasseandresen/shared-dtos";
 import {ListingsService} from "../../data-access/listingsService";
 import {AddressExtractorPipe} from "./address-extractor.pipe";
+import {FormattingUtilities} from "../../utilities/formattingUtilities";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @Component({
   selector: 'listing-card',
@@ -21,29 +23,36 @@ import {AddressExtractorPipe} from "./address-extractor.pipe";
     MatButton,
     MatCardImage,
     MatMiniFabButton,
-    AddressExtractorPipe
+    AddressExtractorPipe,
+    MatTooltip
   ],
   standalone: true
 })
 export class ListingCardComponent {
   public showDeleteButton = false;
+  public currentPrice = computed(() => this.listing().pricedkk);
+  public originalPrice = computed(() => this.listing().originalpricedkk);
+  public currentPriceNumber = computed(() => FormattingUtilities.priceStringToNumber(this.listing().pricedkk) - 300000);
+  public originalPriceNumber = computed(() => FormattingUtilities.priceStringToNumber(this.listing().originalpricedkk));
 
-  @Input()
-  public listing: ListingDto;
-  @Input()
-  public isNewPrice = false;
+  public listing = input.required<ListingDto>();
+  public isNewPrice = input<boolean>( false);
 
-  @Output()
-  public deleteClicked = new EventEmitter<ListingDto>();
+  public deleteClicked = output<ListingDto>();
 
-  constructor(private _listingService: ListingsService) {
+  constructor() {
+  }
+
+  protected getPriceDropPercentage(previous: number, current: number): number {
+    console.log('Previous, current ', previous, current);
+    return Math.round(((previous - current) / previous) * 100);
   }
 
   public openListingClicked() {
-    window.open(this.listing.url, '_blank');
+    window.open(this.listing().url, '_blank');
   }
 
   public async deleteListing() {
-    this.deleteClicked.emit(this.listing);
+    this.deleteClicked.emit(this.listing());
   }
 }
