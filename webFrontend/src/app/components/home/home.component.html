@@ -4,9 +4,20 @@
     </header>
     <main style="display: flex; flex-grow: 1; min-height: 0; min-width: 0;">
         <div style="height: 100%; width: 100%; padding: 12px">
-            <h3>Tracked listings</h3>
+            <div class="horizontal-container">
+                <h3>Tracked listings</h3>
+                <mat-progress-spinner
+                        *ngIf="loadingListings"
+                        style="margin-left: 10px;"
+                        mode="indeterminate"
+                        diameter="20"
+                        color="primary"
+                ></mat-progress-spinner>
+            </div>
             <section class="horizontal-container">
-                <listing-list [listings]="listings"></listing-list>
+                <listing-list [listings]="listings"
+                              (deleteClicked)="deleteListing($event)">
+                </listing-list>
             </section>
             <button mat-button style=""
                     (click)="openNewListingDialog()">

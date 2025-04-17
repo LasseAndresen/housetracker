@@ -12,7 +12,8 @@
         (mousemove)="onMouseMove($event)">
         <listing-card
                 *ngFor="let listing of listings"
-                [listing]="listing">
+                [listing]="listing"
+                (deleteClicked)="deleteListing($event)">
         </listing-card>
     </div>
 

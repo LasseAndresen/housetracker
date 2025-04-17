@@ -47,12 +47,12 @@ export class AddListingDialogComponent {
 
   // Close dialog function
   public close(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   public async confirm(): Promise<void> {
     await this._listingsService.addListing(this.inputUrl);
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   // Handle input changes and call scraperService API

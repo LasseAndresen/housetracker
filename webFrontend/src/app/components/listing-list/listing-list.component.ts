@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, Input} from '@angular/core';
+import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import type { ListingDto } from '@lasseandresen/shared-dtos';
 import {MatIcon} from "@angular/material/icon";
 import {ListingCardComponent} from "../listing-card/listing-card.component";
@@ -19,16 +19,20 @@ import {MatIconButton} from "@angular/material/button";
   standalone: true
 })
 export class ListingListComponent {
-  @ViewChild('carousel') carouselRef!: ElementRef;
+  @ViewChild('carousel')
+  private _carouselRef!: ElementRef;
 
   @Input()
-  listings: ListingDto[] = [];
+  public listings: ListingDto[] = [];
 
-  isDown = false;
-  startX = 0;
-  scrollLeft = 0;
+  @Output()
+  public deleteClicked = new EventEmitter<ListingDto>();
 
-  onMouseDown(event: MouseEvent) {
+  protected isDown = false;
+  private _startX = 0;
+  private _scrollLeft = 0;
+
+  protected onMouseDown(event: MouseEvent) {
     const target = event.target as HTMLElement;
     const tag = target.tagName.toLowerCase();
     const isImage = tag === 'img';
@@ -39,34 +43,38 @@ export class ListingListComponent {
     }
 
     this.isDown = true;
-    const carousel = this.carouselRef.nativeElement;
-    this.startX = event.pageX - carousel.offsetLeft;
-    this.scrollLeft = carousel.scrollLeft;
+    const carousel = this._carouselRef.nativeElement;
+    this._startX = event.pageX - carousel.offsetLeft;
+    this._scrollLeft = carousel._scrollLeft;
   }
 
-  onMouseLeave() {
+  protected onMouseLeave() {
     this.isDown = false;
   }
 
-  onMouseUp() {
+  protected onMouseUp() {
     this.isDown = false;
   }
 
-  onMouseMove(event: MouseEvent) {
+  protected onMouseMove(event: MouseEvent) {
     if (!this.isDown) return;
     event.preventDefault();
-    const carousel = this.carouselRef.nativeElement;
+    const carousel = this._carouselRef.nativeElement;
     const x = event.pageX - carousel.offsetLeft;
-    const walk = (x - this.startX) * 1.5; // drag speed
-    carousel.scrollLeft = this.scrollLeft - walk;
+    const walk = (x - this._startX) * 1.5; // drag speed
+    carousel.scrollLeft = this._scrollLeft - walk;
   }
 
 
-  scrollLeftBtn() {
-    this.carouselRef.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
+  protected scrollLeftBtn() {
+    this._carouselRef.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
   }
 
-  scrollRightBtn() {
-    this.carouselRef.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
+  protected scrollRightBtn() {
+    this._carouselRef.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
+  }
+
+  protected deleteListing(listing: ListingDto) {
+    this.deleteClicked.emit(listing);
   }
 }

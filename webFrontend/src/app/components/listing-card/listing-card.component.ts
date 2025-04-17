@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {CommonModule} from "@angular/common";
@@ -33,6 +33,9 @@ export class ListingCardComponent {
   @Input()
   public isNewPrice = false;
 
+  @Output()
+  public deleteClicked = new EventEmitter<ListingDto>();
+
   constructor(private _listingService: ListingsService) {
   }
 
@@ -41,6 +44,6 @@ export class ListingCardComponent {
   }
 
   public async deleteListing() {
-    await this._listingService.deleteListing(this.listing.url);
+    this.deleteClicked.emit(this.listing);
   }
 }
