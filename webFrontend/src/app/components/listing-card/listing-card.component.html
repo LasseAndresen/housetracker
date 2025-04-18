@@ -13,16 +13,15 @@
 
   <mat-card-content class="details">
     <div class="info-row">
-      <span class="price">{{ currentPrice() }} {{currentPrice().includes('kr') ? '' : 'kr.'}}</span>
+      <span class="price">{{ currentPrice() }}</span>
 
       <ng-container *ngIf="originalPrice() && originalPriceNumber() > currentPriceNumber()">
         <mat-icon
-                class="price-drop-icon"
-                color="mat-green-500"
-                matTooltip="Price reduced from {{ originalPrice() }} kr. to {{ currentPrice() }} kr.">
+                class="price-drop-icon down-arrow-icon"
+                matTooltip="Price reduced from {{ originalPrice() }} to {{ currentPrice() }}">
           arrow_downward
         </mat-icon>
-        <span class="price-drop-percentage">
+        <span class="price-drop-percentage down-arrow-icon">
           -{{ getPriceDropPercentage(originalPriceNumber(), currentPriceNumber()) }}%
         </span>
       </ng-container>

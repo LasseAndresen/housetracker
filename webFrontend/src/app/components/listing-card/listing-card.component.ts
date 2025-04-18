@@ -30,8 +30,8 @@ import {MatTooltip} from "@angular/material/tooltip";
 })
 export class ListingCardComponent {
   public showDeleteButton = false;
-  public currentPrice = computed(() => this.listing().pricedkk);
-  public originalPrice = computed(() => this.listing().originalpricedkk);
+  public currentPrice = computed(() => this.listing().pricedkk + (this.listing().pricedkk.includes('kr') ? '' : 'kr.'));
+  public originalPrice = computed(() => this.listing().originalpricedkk + (this.listing().originalpricedkk.includes('kr') ? '' : 'kr.'));
   public currentPriceNumber = computed(() => FormattingUtilities.priceStringToNumber(this.listing().pricedkk) - 300000);
   public originalPriceNumber = computed(() => FormattingUtilities.priceStringToNumber(this.listing().originalpricedkk));
 
