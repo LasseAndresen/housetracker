@@ -1,4 +1,4 @@
-// src/app/components/login/login.component.ts
+// src/app/components/login/login-page.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,10 +10,10 @@ import {InitializationService} from "../../auth/initialization.service";
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, MatProgressSpinner],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss']
 })
-export class LoginComponent {
+export class LoginPageComponent {
   rememberMe = false;
 
   constructor(private authService: AuthService,

@@ -8,13 +8,13 @@ import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
-import {ListingsService} from "../data-access/listingsService";
-import {ScraperService} from "../data-access/scraperService";
+import {ListingsService} from "../../data-access/listingsService";
+import {ScraperService} from "../../data-access/scraperService";
 import {ListingDto} from "@lasseandresen/shared-dtos";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
-  selector: 'app-addListing-dialog',
+  selector: 'app-addListing',
   templateUrl: './addListing-dialog.component.html',
   styleUrl: './addListing-dialog.component.scss',
   imports: [
