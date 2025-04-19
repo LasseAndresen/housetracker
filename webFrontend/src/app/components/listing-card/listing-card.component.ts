@@ -1,10 +1,9 @@
-import {Component, computed, EventEmitter, input, Input, output, Output, signal} from '@angular/core';
+import {Component, computed, input,  output} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {CommonModule} from "@angular/common";
 import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import type {ListingDto} from "@lasseandresen/shared-dtos";
-import {ListingsService} from "../../data-access/listingsService";
 import {AddressExtractorPipe} from "./address-extractor.pipe";
 import {FormattingUtilities} from "../../utilities/formattingUtilities";
 import {MatTooltip} from "@angular/material/tooltip";
@@ -35,9 +34,11 @@ export class ListingCardComponent {
   public currentPriceNumber = computed(() => FormattingUtilities.priceStringToNumber(this.listing().pricedkk) - 300000);
   public originalPriceNumber = computed(() => FormattingUtilities.priceStringToNumber(this.listing().originalpricedkk));
 
+  // Inputs
   public listing = input.required<ListingDto>();
   public isNewPrice = input<boolean>( false);
 
+  // Outputs
   public deleteClicked = output<ListingDto>();
 
   constructor() {

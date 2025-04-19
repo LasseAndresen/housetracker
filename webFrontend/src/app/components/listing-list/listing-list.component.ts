@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChild, ElementRef, input, output} from '@angular/core';
 import type { ListingDto } from '@lasseandresen/shared-dtos';
 import {MatIcon} from "@angular/material/icon";
 import {ListingCardComponent} from "../listing-card/listing-card.component";
@@ -22,11 +22,11 @@ export class ListingListComponent {
   @ViewChild('carousel')
   private _carouselRef!: ElementRef;
 
-  @Input()
-  public listings: ListingDto[] = [];
+  // Inputs
+  public listings = input.required<ListingDto[]>();
 
-  @Output()
-  public deleteClicked = new EventEmitter<ListingDto>();
+  // Outputs
+  public deleteClicked = output<ListingDto>();
 
   protected isDown = false;
   private _startX = 0;
