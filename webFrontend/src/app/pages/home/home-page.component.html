@@ -16,6 +16,7 @@
             </div>
             <section class="horizontal-container">
                 <listing-list [listings]="listings"
+                              [isLoading]="loadingListings"
                               (deleteClicked)="deleteListing($event)">
                 </listing-list>
             </section>

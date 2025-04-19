@@ -10,11 +10,17 @@
         (mouseleave)="onMouseLeave()"
         (mouseup)="onMouseUp()"
         (mousemove)="onMouseMove($event)">
-        <listing-card
-                *ngFor="let listing of listings()"
-                [listing]="listing"
-                (deleteClicked)="deleteListing($event)">
-        </listing-card>
+        <ng-container *ngIf="!isLoading(); else loadingTemplate">
+            <listing-card *ngFor="let listing of listings()"
+                          [listing]="listing"
+                          (deleteClicked)="deleteListing($event)">
+            </listing-card>
+        </ng-container>
+        <ng-template #loadingTemplate>
+            <listing-card-skeleton *ngFor="let i of [].constructor(skeletonCount)">
+            </listing-card-skeleton>
+        </ng-template>
+
     </div>
 
     <button mat-icon-button (click)="scrollRightBtn()" class="nav-button right">

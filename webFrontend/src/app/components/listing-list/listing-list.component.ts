@@ -2,8 +2,9 @@ import {Component, ViewChild, ElementRef, input, output} from '@angular/core';
 import type { ListingDto } from '@lasseandresen/shared-dtos';
 import {MatIcon} from "@angular/material/icon";
 import {ListingCardComponent} from "../listing-card/listing-card.component";
-import {NgClass, NgForOf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatIconButton} from "@angular/material/button";
+import {ListingCardSkeletonComponent} from "../listing-card-skeleton/listing-card-skeleton.component";
 
 @Component({
   selector: 'listing-list',
@@ -14,16 +15,20 @@ import {MatIconButton} from "@angular/material/button";
     MatIconButton,
     ListingCardComponent,
     NgForOf,
-    NgClass
+    NgClass,
+    ListingCardSkeletonComponent,
+    NgIf
   ],
   standalone: true
 })
 export class ListingListComponent {
+  protected skeletonCount = 3;
   @ViewChild('carousel')
   private _carouselRef!: ElementRef;
 
   // Inputs
   public listings = input.required<ListingDto[]>();
+  public isLoading = input.required<boolean>();
 
   // Outputs
   public deleteClicked = output<ListingDto>();

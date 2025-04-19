@@ -1,0 +1,63 @@
+
+:host {
+  display: block;
+  width: 300px;
+}
+
+.listing-card {
+  width: 100%;
+}
+
+.skeleton-image {
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-content {
+  padding: 16px;
+}
+
+.skeleton-title,
+.skeleton-title2,
+.skeleton-price,
+.skeleton-meta,
+.skeleton-button {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  height: 20px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-title {
+  width: 80%;
+}
+
+.skeleton-title2 {
+  width: 60%;
+}
+
+.skeleton-price {
+  width: 40%;
+}
+
+.skeleton-meta {
+  width: 70%;
+}
+
+.skeleton-button {
+  width: 80px;
+  margin-left: auto;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
