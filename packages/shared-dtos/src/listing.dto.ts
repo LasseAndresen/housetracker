@@ -1,3 +1,5 @@
+import {DingeoDto} from "./dingeo.dto";
+
 export interface ListingDto {
   url: string;
   title: string;
@@ -8,4 +10,5 @@ export interface ListingDto {
   dateadded: Date;
   pricedkk: string;
   originalpricedkk?: string;
+  dinGeoData?: DingeoDto
 }

@@ -1,10 +1,10 @@
-import {IScraper} from "./iScraper";
-import {scrapeWebsite} from "../scraperUtilities";
-import {Selector} from "../models/selector";
+import {IRealEstateScraper} from "./iRealEstateScraper";
+import {scrapeWebsite} from "../../scraperUtilities";
+import {Selector} from "../../models/selector";
 import {ListingDto} from "@lasseandresen/shared-dtos";
 import Root = cheerio.Root;
 
-export class EdcScraper implements IScraper {
+export class EdcScraper implements IRealEstateScraper {
   public async scrapeListing(url: string): Promise<ListingDto> {
     const selectors = [
       {type: 'string', selector: 'div[data-module=Case] div:nth-child(2) header h1'} as Selector, // Title 1

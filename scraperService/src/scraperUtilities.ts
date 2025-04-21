@@ -1,14 +1,14 @@
 import * as cheerio from 'cheerio';
 import puppeteer from 'puppeteer';
 import {Selector} from "./models/selector";
-import {IScraper} from "./scrapers/iScraper";
-import {NyboligScraper} from "./scrapers/nyboligScraper";
-import {DanboligScraper} from "./scrapers/danboligScraper";
-import {HomeScraper} from "./scrapers/homeScraper";
-import {EdcScraper} from "./scrapers/edcScraper";
-import {BoligsidenScraper} from "./scrapers/boligsidenScraper";
+import {IRealEstateScraper} from "./scrapers/realEstate/iRealEstateScraper";
+import {NyboligScraper} from "./scrapers/realEstate/nyboligScraper";
+import {DanboligScraper} from "./scrapers/realEstate/danboligScraper";
+import {HomeScraper} from "./scrapers/realEstate/homeScraper";
+import {EdcScraper} from "./scrapers/realEstate/edcScraper";
+import {BoligsidenScraper} from "./scrapers/realEstate/boligsidenScraper";
 
-export function getScraperFromUrl(url: string): IScraper {
+export function getScraperFromUrl(url: string): IRealEstateScraper {
   if (url.includes('nybolig.dk')) {
     return new NyboligScraper();
   }

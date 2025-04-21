@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import {getScraperFromUrl, getSelectorsFromStrings, scrapeWebsite} from "./scraperUtilities";
+import {DingeoScraper} from "./scrapers/dingeoScraper";
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -9,7 +10,7 @@ app.use(express.json());
 app.use(cors()); // Allow all origins to access
 
 app.get('/scrapeListing', async (req: Request, res: Response): Promise<void> => {
-    const url = req.query.url as string;
+    const { url, includeDingeo } = req.query as {url: string, includeDingeo: string};
 
     if (!url) {
         res.status(400).json({ error: "URL parameter is required" });
@@ -19,11 +20,18 @@ app.get('/scrapeListing', async (req: Request, res: Response): Promise<void> => 
     if (!scraper) {
         res.status(400).json({ error: "Scraper not found" });
     }
-    const result = await scraper.scrapeListing(url);
-    res.json(result);
+    const listing = await scraper.scrapeListing(url);
+    if (includeDingeo === 'true') {
+        new DingeoScraper().scrape(listing.title);
+    }
+    res.json(listing);
 });
 
-app.get('/scrapeTest', async (req: Request, res: Response): Promise<void> => {
+app.get('/scrapeFilter', async (req: Request, res: Response): Promise<void> => {
+    const url = req.query.url as string;
+})
+
+app.get('/scrapeCustom', async (req: Request, res: Response): Promise<void> => {
     const { url, selectors } = req.query;
 
     if (!url) {

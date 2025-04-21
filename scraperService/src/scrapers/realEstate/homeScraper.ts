@@ -1,9 +1,9 @@
-import {IScraper} from "./iScraper";
-import {scrapeWebsite} from "../scraperUtilities";
-import {Selector} from "../models/selector";
+import {IRealEstateScraper} from "./iRealEstateScraper";
+import {scrapeWebsite} from "../../scraperUtilities";
+import {Selector} from "../../models/selector";
 import {ListingDto} from "@lasseandresen/shared-dtos";
 
-export class HomeScraper implements IScraper {
+export class HomeScraper implements IRealEstateScraper {
   public async scrapeListing(url: string): Promise<ListingDto> {
     const selectors = [
       {type: 'string', selector: 'div.property-details-main__content-inner .property-details-information__row h1'} as Selector, // Title

@@ -24,7 +24,7 @@
     "generate-entities": "node -r dotenv/config scripts/generate-entities.js"
   },
   "dependencies": {
-    "@lasseandresen/shared-dtos": "^1.1.1",
+    "@lasseandresen/shared-dtos": "^1.2.0",
     "@nestjs/axios": "^4.0.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.1",
